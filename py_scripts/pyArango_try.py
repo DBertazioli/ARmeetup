@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[16]:
 
 
 from __future__ import print_function
 
+import platform
 import pandas as pd
 import subprocess
 import time
@@ -21,7 +22,7 @@ except ImportError as e:
     import pyArango
 
 
-# In[2]:
+# In[17]:
 
 
 from pyArango.connection import *
@@ -41,13 +42,17 @@ my_auth="root"
 
 reset=True
 
-local=False #set to false for vm use
-
+if platform.release()=="4.9.0-8-amd64":
+    
+    local=False #set to false for vm 
+else:
+    local=True
+    
 
 if local:
     addr= "http://10.9.13.4:7474"
 else:
-    addr= "http://localhost:7474"
+    addr= "localhost:7474"
 
 
 # In[4]:
@@ -79,8 +84,6 @@ if not conn.hasDatabase(db_name):
 
 
 db = conn[db_name] # all databases are loaded automatically into the connection and are accessible in this fashion
-if reset:
-    db.dropAllCollections()
 
 
 # In[8]:
@@ -111,6 +114,48 @@ class MyGraph(Graph) :
 # In[9]:
 
 
+def reset_coll(db,drop=True, create=True):
+    if drop:
+        db.dropAllCollections()
+    if create:
+        try:
+            if not conn.hasDatabase(db_name):
+                print ("creating db: {}".format(db_name))
+                conn.createDatabase(name=db_name)
+            if not db.hasCollection("Member"):
+                print ("creating coll: {}".format("Member"))
+                db.createCollection("Member")
+
+            if not db.hasCollection("subscribed_to"):
+                print ("creating coll: {}".format("subscribed_to"))
+                db.createCollection("subscribed_to")
+            if not db.hasGraph("MyGraph"):
+                print("creating graph: {}".format("MyGraph"))
+                theGraph = db.createGraph("MyGraph")
+
+        except Exception as err:
+           #logging.critical(
+           #   "Failed to create neomeetup DB: %" 
+           #   % err)
+            print(err, "\n err while resetting")
+
+
+# In[10]:
+
+
+if reset:
+    reset_coll(db, create=False)
+
+
+# In[8]:
+
+
+
+
+
+# In[13]:
+
+
 # create the collections (do this only if they don't already exist in the database)
 if not db.hasCollection("Member"):
     print ("creating coll: {}".format("Member"))
@@ -119,15 +164,16 @@ if not db.hasCollection("Member"):
 if not db.hasCollection("subscribed_to"):
     print ("creating coll: {}".format("subscribed_to"))
     db.createCollection("subscribed_to")
-
-
-# In[10]:
-
-
 # same for the graph
 if not db.hasGraph("MyGraph"):
     print("creating graph: {}".format("MyGraph"))
     theGraph = db.createGraph("MyGraph")
+
+
+# In[12]:
+
+
+
 
 
 # In[11]:
@@ -143,171 +189,63 @@ if not db.hasGraph("MyGraph"):
 #theGraph.deleteVertex(h2)
 
 
-# In[12]:
+# In[14]:
 
 
-#stop=True
-stop=True
-
-#skip=True
-skip=False
-
-#verbose=True
-verbose=True
-
-n=100
-n_skip=400000 #just debug purpose
-n_stop=1000
-
-start_t=time.time()
-
-if verbose:
-    m_time=start_t
-
-for line in df.itertuples():
-    if not skip:
-        theGraph.createVertex('Member', {"member_id": line.member_id, "member_name": line.member_name })
-        if (line.Index % n == 0 and line.Index!=0):    
-            if verbose: print("line is ", line.Index)
-            if verbose: 
-                if m_time:
-                    print("committed in {} s".format((time.time()-m_time)))
-                else:
-                    print("committed in {} s".format((time.time()-start_t)))
-                m_time=time.time()
-                    
-    else:
-        if line.Index >= n_skip:
-            theGraph.createVertex('Member', {"member_id": line.member_id, "member_name": line.member_name })
-            if line.Index % n == 0:    
-                if verbose: print("line is ", line.Index)
-                if verbose: 
-                    print("committed in {} s".format((time.time()-m_time)))
-                    m_time=time.time()
-
-    if stop:
-        if skip:
-            if line.Index == n_stop+n_skip:
-                print("reached line {} in {} s".format(line.Index, (time.time()-start_t)))
-                print("breaking")
-                break
-        else:
-            if line.Index == n_stop:
-                print("reached line {} in {} s".format(line.Index, (time.time()-start_t)))
-                print("breaking")
-                break
-            
-
-if not stop:
-    print("reached line {} in {} s".format(len(df), (time.time()-start_t)))
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[13]:
-
-
-#useful funct
 go=False
 if go:
-    def reset_db(client, name):
+    #stop=True
+    stop=True
 
-        # Remove Old Database
-        client.db_drop(name)
+    #skip=True
+    skip=False
 
-        # Create New Database
-        try:
-            client.db_create(
-               db,
-               pyorient.DB_TYPE_GRAPH,
-               pyorient.STORAGE_TYPE_PLOCAL)
-           #logging.info("neomeetup1 Database Created.")
-        except pyorient.PyOrientException as err:
-           #logging.critical(
-           #   "Failed to create neomeetup DB: %" 
-           #   % err)
-            print(err, "\n err while resetting")
+    #verbose=True
+    verbose=True
 
-    def _my_callback(for_every_record):
-        print(for_every_record) 
-    
-    
-    if client.db_exists(db):
-       # Open Database
-        print("opening db: {}".format(db))
-        try:
-            client.db_open(db, my_auth, my_auth)
-        except pyorient.PyOrientException as err:
-            print(err)
+    n=100
+    n_skip=400000 #just debug purpose
+    n_stop=1000
 
-    else:
-        try:
-            client.db_create(
-               db,
-               pyorient.DB_TYPE_GRAPH,
-               pyorient.STORAGE_TYPE_PLOCAL)
-           #logging.info("neomeetup1 Database Created.")
-        except pyorient.PyOrientException as err:
-           #logging.critical(
-           #   "Failed to create neomeetup DB: %" 
-           #   % err)
-            print(err)  
+    start_t=time.time()
+
+    if verbose:
+        m_time=start_t
+
+    for line in df.itertuples():
+        if not skip:
+            theGraph.createVertex('Member', {"member_id": line.member_id, "member_name": line.member_name })
+            if (line.Index % n == 0 and line.Index!=0):    
+                if verbose: print("line is ", line.Index)
+                if verbose: 
+                    if m_time:
+                        print("committed in {} s".format((time.time()-m_time)))
+                    else:
+                        print("committed in {} s".format((time.time()-start_t)))
+                    m_time=time.time()
+
+        else:
+            if line.Index >= n_skip:
+                theGraph.createVertex('Member', {"member_id": line.member_id, "member_name": line.member_name })
+                if line.Index % n == 0:    
+                    if verbose: print("line is ", line.Index)
+                    if verbose: 
+                        print("committed in {} s".format((time.time()-m_time)))
+                        m_time=time.time()
+
+        if stop:
+            if skip:
+                if line.Index == n_stop+n_skip:
+                    print("reached line {} in {} s".format(line.Index, (time.time()-start_t)))
+                    print("breaking")
+                    break
+            else:
+                if line.Index == n_stop:
+                    print("reached line {} in {} s".format(line.Index, (time.time()-start_t)))
+                    print("breaking")
+                    break
 
 
-# In[ ]:
-
-
-
+    if not stop:
+        print("reached line {} in {} s".format(len(df), (time.time()-start_t)))
 
