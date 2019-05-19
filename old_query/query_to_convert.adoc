@@ -46,11 +46,13 @@ return { Topic, Totale_utenti }
 
 * Trend topic tra i gruppi
 
-[source, cypher]
+[source, aql]
 ----
-match (g:Group)-[r:DEALS_WITH]->(t:Topic)
-return distinct t.name as Topic, count(g) as Totale_gruppi
-order by Totale_gruppi desc
+for g in group
+    for t in 1..1 outbound g deals_with
+    collect Topic = t.topic_name with count into Totale_gruppi
+    sort Totale_gruppi desc
+return { Topic, Totale_gruppi }
 ----
 
 * Numero di eventi per Paese
