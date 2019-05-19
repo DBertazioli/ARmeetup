@@ -13,6 +13,14 @@ return e.name as name, e.time as time, g.country as country, g.state as state, g
 order by name, time desc
 ----
 
+[source, AQL]
+----
+for g in group
+    for e in 1..1 outbound g hosted_event
+    filter e.time != 'NONE'
+return { name: e.event_name, time: e.time, country: g.group_country, state: g.group_state, lon: g.group_lon, lat: g.group_lat }
+----
+
 * Gruppi per Paese
 
 [source, aql]
