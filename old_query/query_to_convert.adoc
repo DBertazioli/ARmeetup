@@ -15,11 +15,12 @@ order by name, time desc
 
 * Gruppi per Paese
 
-[source, cypher]
+[source, aql]
 ----
-match (g:Group)
-return distinct g.country as Country, count(g) as Numero_gruppi
-order by Numero_gruppi desc
+for g in group
+collect country = g.group_country with count into n_of_groups
+sort n_of_groups desc
+return {country, n_of_groups}
 ----
 
 * Media degli ospiti
