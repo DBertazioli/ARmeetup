@@ -2,18 +2,7 @@
 
 * Distribuzione temporale eventi (time non nullo)
 
-[source, cypher]
-----
-//match (e:Event)
-//set e.newtime = apoc.date.format(e.time, 'ms', 'dd/MM/yyyy HH:mm:ss','GMT0:00'), conversione necessaria prima della nuova implementazione per le TZ
-
-match (g:Group)-[r:HOSTED_EVENT]->(e:Event)
-where e.time is not null
-return e.name as name, e.time as time, g.country as country, g.state as state, g.lon as lon, g.lat as lat
-order by name, time desc
-----
-
-[source, AQL]
+[source, aql]
 ----
 for g in group
     for e in 1..1 outbound g hosted_event
