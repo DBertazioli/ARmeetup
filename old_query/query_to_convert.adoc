@@ -23,14 +23,18 @@ return {country, n_of_groups}
 
 * Media degli ospiti
 
-[source, cypher]
+[source, aql]
 ----
-match (m:Member)-[r:WILL_PARTECIPATES]->(e:Event)
-with count(m) as Partecipanti, r.response as risposta, e.name as Evento, r.guests as Ospiti
-where r.response = "yes" and Partecipanti > 10
-//set r.guests = toInteger(r.guests)
-return  Evento , avg(Ospiti) as AVG_Guests, Partecipanti
-order by AVG_Guests desc
+for m in member
+    for e,tempE in 1..1 outbound m will_partecipates
+    filter tempE.response == 'yes'
+    collect Evento = e.event_name
+    aggregate   Partecipanti = length(1),
+                Ospiti = average(tempE.guests) 
+    filter Partecipanti > 10
+    sort Ospiti desc
+return { Evento, Partecipanti, Ospiti }
+
 ----
 
 * Trend topic tra gli utenti
