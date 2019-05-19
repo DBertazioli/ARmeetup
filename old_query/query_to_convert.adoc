@@ -1,0 +1,117 @@
+﻿= Lista di query eseguite con successo
+
+* Distribuzione temporale eventi (time non nullo)
+
+[source, aql]
+----
+for g in group
+    for e in 1..1 outbound g hosted_event
+    filter e.time != 'NONE'
+    sort e.event_name, e.time desc
+return { name: e.event_name, time: e.time, country: g.group_country, state: g.group_state, lon: g.group_lon, lat: g.group_lat }
+----
+
+* Gruppi per Paese
+
+[source, aql]
+----
+for g in group
+collect country = g.group_country with count into n_of_groups
+sort n_of_groups desc
+return {country, n_of_groups}
+----
+
+* Media degli ospiti
+
+[source, aql]
+----
+for m in member
+    for e,tempE in 1..1 outbound m will_partecipates
+    filter tempE.response == 'yes'
+    collect Evento = e.event_name
+    aggregate   Partecipanti = length(1),
+                Ospiti = average(tempE.guests) 
+    filter Partecipanti > 10
+    sort Ospiti desc
+return { Evento, Partecipanti, Ospiti }
+
+----
+
+* Trend topic tra gli utenti
+
+[source, aql]
+----
+for m in member
+    for t in 1..1 outbound m is_interested_in
+    collect Topic = t.topic_name with count into Totale_utenti
+    sort Totale_utenti desc
+return { Topic, Totale_utenti }
+----
+
+* Trend topic tra i gruppi
+
+[source, aql]
+----
+for g in group
+    for t in 1..1 outbound g deals_with
+    collect Topic = t.topic_name with count into Totale_gruppi
+    sort Totale_gruppi desc
+return { Topic, Totale_gruppi }
+----
+
+* Numero di eventi per Paese
+
+[source, aql]
+----
+for e in event
+    for g in 1..1 inbound e hosted_event
+    collect country = g.group_country with count into Numero_eventi
+    sort Numero_eventi desc
+return { Numero_eventi, country }
+----
+
+* Massimo numero di partecipanti ad un evento per Paese
+
+[source, cypher]
+----
+match (m:Member)-[r:WILL_PARTECIPATES]->(e:Event)<-[r1:HOSTED_EVENT]-(g:Group)
+with count(m) as part, e, g
+return max(part) as max_part, g.country
+order by max_part desc
+----
+
+* Jaccard similarity measure between declared and group topics for every member
+[source, cypher]
+----
+match (m:Member)-[r:IS_INTERESTED_IN]->(t:Topic)<-[r1:DECLARED_INTEREST_IN]-(m)
+with count(t) as corrispondenze, m
+match (m)-[r:DECLARED_INTEREST_IN]->(t:Topic)
+with count(r) as dichiarati, corrispondenze, m
+match (m)-[r1:IS_INTERESTED_IN]-(t:Topic)
+with m, corrispondenze, dichiarati, count(r1) as interessato
+return m.id as ID, corrispondenze, dichiarati, interessato, (toFloat(corrispondenze))/((toFloat(dichiarati)+toFloat(interessato))-toFloat(corrispondenze)) as jac_similarity
+order by jac_similarity desc
+----
+
+* Distance_member_event
+[source, cypher]
+----
+match (m:Member)-[r1:WILL_PARTECIPATES]->(e:Event)<-[r:HOSTED_EVENT]-(g:Group)
+where g.lon <> 'NONE' and g.lat <> 'NONE' and m.lat is not null and m.long is not null and r1.response = 'yes'
+with point({latitude: toFloat(g.lat),longitude:toFloat(g.lon)}) as p1, point({latitude:toFloat(m.lat), longitude:toFloat(m.long)}) as p2, m.id as member_id, e.id as event_id, m.lat as lat_member, m.long as lon_member, g.lat as lat_event, g.lon as lon_event
+return member_id, event_id, lat_member, lon_member, lat_event, lon_event, (max(distance(p1,p2)))/1000 as dist
+order by dist desc
+----
+
+
+* Distance_member_event_milan (o per tot città)
+[source, cypher]
+----
+match (m:Member)-[r:WILL_PARTECIPATES]->(e:Event)<-[r1:HOSTED_EVENT]-(g:Group)
+where g.city = "Milano" and g.lon <> 'NONE' and g.lat <> 'NONE' and m.lat is not null and m.long is not null and r.response = 'yes'
+optional match (g)-[r1]->(e)-[r2:HOSTED_AT]->(v:Venue)
+where g.city = "Milano" and v.lat is not null and v.lon is not null
+with point({latitude: toFloat(g.lat),longitude:toFloat(g.lon)}) as p1, point({latitude:toFloat(m.lat), longitude:toFloat(m.long)}) as p2, e.id as ID_event, e.name as event_name,g.lat as g_lat, g.lon as g_lon,v.name as venue_name, v.lat as v_lat, v.lon as v_lon, m.id as ID_member
+return ID_member, ID_event, event_name, g_lat, g_lon, venue_name, v_lat, v_lon, (distance(p1,p2))/1000 as dist
+order by ID_member desc
+----
