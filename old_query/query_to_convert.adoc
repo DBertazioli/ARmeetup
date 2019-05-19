@@ -35,11 +35,13 @@ order by AVG_Guests desc
 
 * Trend topic tra gli utenti
 
-[source, cypher]
+[source, aql]
 ----
-match (m:Member)-[r:IS_INTERESTED_IN]->(t:Topic)
-return distinct t.name as Topic, count(m) as Totale_utenti
-order by Totale_utenti desc
+for m in member
+    for t in 1..1 outbound m is_interested_in
+    collect Topic = t.topic_name with count into Totale_utenti
+    sort Totale_utenti desc
+return { Topic, Totale_utenti }
 ----
 
 * Trend topic tra i gruppi
