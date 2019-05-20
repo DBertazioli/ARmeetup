@@ -6,6 +6,7 @@
 
 from __future__ import print_function
 
+import sys #std output redirection
 import platform
 import pandas as pd
 import subprocess
@@ -38,6 +39,13 @@ from arango import ArangoClient
 
 # In[31]:
 
+std_output_redir=True
+
+if std_output_redir:
+    orig_stdout = sys.stdout
+    f = open('log.txt', 'w')
+    sys.stdout = f
+    
 
 db_name="meetup2"
 graph_name="MeetupGraph"
@@ -182,17 +190,17 @@ if create:
                 )
             print("creating edge_definition: {}".format("DEALS_WITH"))
          
-        if theGraph.has_edge_definition('WILL_PARTECIPATE'):
-            WILL_PARTECIPATES = theGraph.edge_collection("WILL_PARTECIPATE")
-            print("creating edge_collection: {}".format("WILL_PARTECIPATE"))
+        if theGraph.has_edge_definition('WILL_PARTICIPATE'):
+            WILL_PARTICIPATE = theGraph.edge_collection("WILL_PARTICIPATE")
+            print("creating edge_collection: {}".format("WILL_PARTICIPATE"))
             
         else:
-            WILL_PARTECIPATES = theGraph.create_edge_definition(
-                    edge_collection='WILL_PARTECIPATE',
+            WILL_PARTICIPATE = theGraph.create_edge_definition(
+                    edge_collection='WILL_PARTICIPATE',
                     from_vertex_collections=['Member'],
                     to_vertex_collections=['Event']
                 )
-            print("creating edge_definition: {}".format("WILL_PARTECIPATE"))
+            print("creating edge_definition: {}".format("WILL_PARTICIPATE"))
         
         if theGraph.has_edge_definition('HOSTED_AT'):
             HOSTED_AT = theGraph.edge_collection("HOSTED_AT")
@@ -216,7 +224,7 @@ if create:
                     from_vertex_collections=['Member'],
                     to_vertex_collections=['Topic']
                 )
-            print("creating edge_definition: {}".format("WILL_PARTECIPATE"))
+            print("creating edge_definition: {}".format("WILL_PARTICIPATE"))
         
             
         #print(theGraph.vertex_collections())
@@ -235,8 +243,9 @@ if create:
 
 
 go=True
-if go:#stop=True
-    stop=True
+if go:
+    #stop=True
+    stop=False
 
     #skip=True
     skip=False
@@ -244,9 +253,9 @@ if go:#stop=True
     #verbose=True
     verbose=True
 
-    n=10000
+    n=20000
     n_skip=400000 #just debug purpose
-    n_stop=100000
+    n_stop=200000
 
     start_t=time.time()
 
@@ -296,7 +305,7 @@ if go:#stop=True
                     venue=j['venue']
                 
                 try:
-                    if member_id not in members:
+                    if member_id not in members: #could avoid checking?
                         members.append(member_id)
                         #print("appending member")
                         batch_db.collection('Member').insert(member)
@@ -312,7 +321,7 @@ if go:#stop=True
                     for top in group_topics:
                     #print(group_topics)
                         urlkey=top['urlkey']
-                        if count < 50000: #empirical optimization, better on count or on topics lenght?
+                        if count < 80000: #empirical optimization, better on count or on topics lenght?
                             if urlkey not in topics:
                                 #print(top)
                                 topics[urlkey]=t_idfier
@@ -359,7 +368,7 @@ if go:#stop=True
                             batch_db.collection('HOSTED_AT').insert({'_from': e_id,'_to': v_id, 'name':"HOSTED_AT"})
                     
                     batch_db.collection('HOSTED_EVENT').insert({'_from': g_id,'_to': e_id, 'name':"HOSTED_EVENT"})
-                    batch_db.collection('WILL_PARTECIPATE').insert({'_from': m_id,'_to': e_id, 'name':"WILL_PARTECIPATE"})
+                    batch_db.collection('WILL_PARTICIPATE').insert({'_from': m_id,'_to': e_id, 'name':"WILL_PARTICIPATE"})
                     
                        
                     
@@ -432,6 +441,10 @@ if go:#stop=True
 
 #print(topics)
 # In[ ]:
+
+sys.stdout = orig_stdout
+f.close()
+
 
 
 
