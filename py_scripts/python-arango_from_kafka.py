@@ -62,7 +62,7 @@ else:
 kafka_consumer = KafkaConsumer(bootstrap_servers = "sandbox-hdf.hortonworks.com:6667",
                          auto_offset_reset = 'earliest',
                          consumer_timeout_ms = 1000)
-consumer.subscribe(['topic_april'])
+consumer.subscribe(['april_topic'])
 print("subscribed to april meetup topic")
 
 
