@@ -9,17 +9,15 @@
 #(https://www.meetup.com/it-IT/meetup_api/docs/stream/2/rsvps) 
 #from Kafka to a ArangoDB database. Meant for online execution, while acquiring streaming data.  
 #
-# To do: optimize topic management, implement online member enrichment (decleared topics mainly)
+# To do: add script option (implement argparser), optimize topic management, implement online member enrichment (decleared topics mainly)
 
-
-
-from __future__ import print_function
+#IMPORTS
+#from __future__ import print_function # if python2 
 
 import sys #std output redirection
-import platform
-import pandas as pd
-import subprocess
-import time
+import platform #fast os detection
+import subprocess #optional pip
+import time 
 import json
 try:
     from kafka import KafkaConsumer
@@ -31,6 +29,7 @@ except ImportError as e:
     print(output, ", error = {}, ".format(error), e)
     process.kill()
     from kafka import KafkaConsumer
+
 import kafka
 
 try:
@@ -43,10 +42,11 @@ except ImportError as e:
     print(output, ", error = {}, ".format(error), e)
     process.kill()
     import arango
+    
 from arango import ArangoClient
 
 
-# In[31]:
+# output redirection for an easy logging/debugging
 
 std_output_redir=True
 
@@ -55,14 +55,15 @@ if std_output_redir:
     f = open('log.txt', 'w')
     sys.stdout = f
     
+# settings
 
 db_name="meetup2"
 graph_name="MeetupGraph"
-my_auth="root"
+#my_auth="<my_auth>"
 
-if platform.release()=="4.9.0-8-amd64":
-    local=False #set to false for vm 
-else:
+if platform.release()=="4.9.0-8-amd64": #sandbox vm os 
+    local=False 
+else: #supposing we are working from our (local) pc's
     local=True
 
 if local:
@@ -72,21 +73,27 @@ else:
     host= "localhost"
     port= "7474"
 
-# In[1]:
+# Setting up a KafkaConsumer
 
-consumer = KafkaConsumer(bootstrap_servers = "sandbox-hdf.hortonworks.com:6667",
-                         auto_offset_reset = 'earliest',
-                         consumer_timeout_ms = 3000)
-consumer.subscribe(['april_topic'])
-print("subscribed to april meetup topic")
+try:    
+    consumer = KafkaConsumer(bootstrap_servers = "sandbox-hdf.hortonworks.com:6667",
+                             auto_offset_reset = 'earliest',
+                             consumer_timeout_ms = 3000)
+    consumer.subscribe(['april_topic'])
+    print("subscribed to april meetup topic")
+except Exception as e:
+    print(e)
+    sys.exit()
+    
+# Setting up a KafkaConsumer
 
 try:
     client = ArangoClient(protocol="http", host=host, port=port)
 except Exception as e:
     print(e)
-client
+    sys.exit()
 
-# In[5]:
+# Setting up the arango database
 
 drop=True
 create=True
@@ -226,17 +233,17 @@ if create:
        #   "Failed to create neomeetup DB: %" 
        #   % err)
         print(err, "\n err while resetting")
+        sys.exit()
 
-# # Trying Batch Execution
+# # Batch Execution for the meetup data import
 
 go=True
 if go:
+    #just some debugging steps
     #stop=True
     stop=False
-
-    #skip=True
-    skip=False
-
+    
+    #for verbose output (describing performance)
     #verbose=True
     verbose=True
 
@@ -249,49 +256,54 @@ if go:
     if verbose:
         m_time=start_t
     
+    #checks on existing nodes, could even avoid it,being actually demanded to the ArangoDB server
     groups= []
     members=[]
     events=[]
     venues=[]
-    topics={}
     
+    #however topics dict creation seems to be a must since topics are not indexed.
+    topics={} 
+    #manual index for topics
     t_idfier=0
     
+    #Database API wrapper tailored specifically for batch execution
     batch_db = db.begin_batch_execution(return_result=True)
+    
     for count, filename in enumerate(consumer):
         
         if not skip:
             try:        
                 j = json.loads(filename.value)
                 group_id = j['group']['group_id']
-                g_id="Group/"+str(group_id)
+                g_id="Group/"+str(group_id) #the proper arango group id 
                 j['group'].update({'_id':g_id})             
                 group = j['group']
                 group_topics = j['group']['group_topics']
                 
                 member_id = j['member']['member_id']
-                m_id="Member/"+str(member_id)
+                m_id="Member/"+str(member_id) #the proper arango member id
                 #j['member']['_key']=m_key
                 j['member'].update({'_id':m_id})
                 member=j['member']
                 
                 event_id = j['event']['event_id']
-                e_id="Event/"+str(event_id)
+                e_id="Event/"+str(event_id) #the proper arango event id
                 j['event'].update({'_id':e_id})             
                 event=j['event']
                 
-                if j.get('venue'):
+                if j.get('venue'): #venues not always exist (actually, rarely do)
                     has_venue=True
                     venue_id = j['venue']['venue_id']
-                    v_id="Venue/"+str(venue_id)
+                    v_id="Venue/"+str(venue_id) #the proper arango venue id
                     j['venue'].update({'_id':v_id})             
                     venue=j['venue']
                 
                 try:
-                    if member_id not in members: #could avoid checking?
+                    if member_id not in members: #could avoid those kind of checks, rm for memory opt.
                         members.append(member_id)
                         #print("appending member")
-                        batch_db.collection('Member').insert(member)
+                        batch_db.collection('Member').insert(member) #saving operation in batch
                     #else:
                     #    print("member already into db")
                     if group_id not in groups:
@@ -301,22 +313,26 @@ if go:
                     #else:
                     #    print("group already into db")
                     batch_db.collection('MEMBER_OF').insert({'_from': m_id,'_to': g_id, 'name':"MEMBER_OF"})
+                    
+                    #topics management
                     for top in group_topics:
-                    #print(group_topics)
                         urlkey=top['urlkey']
-                        if count < 80000: #empirical optimization, better on count or on topics lenght?
+                        #empirical optimization, better on count or on topics lenght?
+                        #after the topics dict gets fullfilled, 
+                        #it begins more efficient to implement a try/except prassi rather than if checking 
+                        if count < 80000: 
                             if urlkey not in topics:
-                                #print(top)
-                                topics[urlkey]=t_idfier
+                                topics[urlkey]=t_idfier #create the id (urlkeys are uniques)
                                 #topics[idfier]=top['urlkey']
                                 t_idfier+=1
-                                t_id="Topic/"+str(t_idfier)
+                                t_id="Topic/"+str(t_idfier) #proper arango topic id
                                 top.update({'_id':t_id})
-                                batch_db.collection('Topic').insert(top)
-                                batch_db.collection('DEALS_WITH').insert({'_from': g_id,'_to': t_id, 'name':"DEALS_WITH"})
-                                batch_db.collection('IS_INTERESTED_IN').insert({'_from': m_id,'_to': t_id, 'name':"IS_INTERESTED_IN"})
+                                
+                                batch_db.collection('Topic').insert(top) #creates vertex
+                                batch_db.collection('DEALS_WITH').insert({'_from': g_id,'_to': t_id, 'name':"DEALS_WITH"}) #creates edge
+                                batch_db.collection('IS_INTERESTED_IN').insert({'_from': m_id,'_to': t_id, 'name':"IS_INTERESTED_IN"}) #creates edge
                             else:
-                                tid=topics[urlkey]
+                                tid=topics[urlkey] 
                                 t_id="Topic/"+str(tid)
 
                                 batch_db.collection('DEALS_WITH').insert({'_from': g_id,'_to': t_id, 'name':"DEALS_WITH"})
@@ -369,7 +385,8 @@ if go:
                     break
                 '''
                 print(e)
-                
+             
+            #periodic commits
             if (count % n == 0 and count!=0):    
                 batch_db.commit()
                 batch_db = db.begin_batch_execution(return_result=True)
@@ -380,27 +397,6 @@ if go:
                     else:
                         print("committed in {} s".format((time.time()-start_t)))
                     m_time=time.time()
-
-        else:
-            if count >= n_skip:
-                key="Member/"+str(line.member_id)
-                try:
-                    #print("inserting")
-                    Member.insert({"_id":key ,"member_id": line.member_id, "member_name": line.member_name })
-                    #print("inserted")
-                except Exception as e:
-                    if Member.has(key):
-                        #print("member already present")
-                        pass
-                    else:
-                        print(e)
-                        break
-
-                if count % n == 0:    
-                    if verbose: print("line is ", count)
-                    if verbose: 
-                        print("committed in {} s".format((time.time()-m_time)))
-                        m_time=time.time()
 
         if stop:
             if skip:
@@ -414,13 +410,13 @@ if go:
                     print("breaking")
                     break
 
-    batch_db.commit()
+    batch_db.commit() #last commit (probably count % n != 0 for the final value of count)
 
     if not stop:
         print("reached line {} in {} s".format(count, (time.time()-start_t)))
 
-#print(topics)
-# In[ ]:
 
-sys.stdout = orig_stdout
-f.close()
+# closing file and resetting stdout to default
+if std_output_redir:
+    sys.stdout = orig_stdout
+    f.close()
