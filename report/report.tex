@@ -30,7 +30,7 @@
 %% only if the base font of the document is to be sans serig
 \usepackage[T1]{fontenc}
 \renewcommand*\oldstylenums[1]{{\fontfamily{Montserrat-TOsF}\selectfont #1}}
-\renewcommand{\floatpagefraction}{.6} % for text coexisting with figs and tabs
+\renewcommand{\floatpagefraction}{.8} % for text coexisting with figs and tabs
 
 \graphicspath{ {./images/} }
 
@@ -136,12 +136,12 @@ L'obiettivo del progetto, in sintesi, è quello di identificare correlazioni o t
 \newpage
 \section{Implementation: Architecture}
 {\small %FIXME: IMPORTANT: da aggiungere caratteristiche quali tolerance failure et similia un po' ovunque
-\subsection{Covered point}
-L'intera strutturazione del progetto si pone come obiettivi didattici, oltre a quelli pratici già esposti, di coprire le tre \textbf{V} caratteristiche dei \textit{Big Data}:
+\subsection{Covered points}
+L'intera strutturazione del progetto si pone come obiettivi didattici, oltre a quelli pratici già esposti, di coprire due delle tre \textbf{V} caratteristiche dei \textit{Big Data}:
 \begin{enumerate}
 \item \textbf{V}elocity: attraverso l'applicazione di raccolta dei dati provenienti da una fonte streaming, con tutte le problematiche a questa connessa, come connessione e immagazzinamento dei dati real time.
 \item \textbf{V}olume: la raccolta dei dati ha prodotto un quantitativo di dati di notevole importanza, comportando la costruzione di un DB di dimensione superiore ai 2 GB. Ciò ha comportato la necessità di applicare tecniche e tool adeguati a compiere task su grandi moli di dati in tempi accettabili.
-\item \textbf{V}ariety: la raccolta dei dati non si è infatti limitata all'immagazzinamento tramite streaming, ma è stata applicata anche attraverso interrogazione a REST api necessitando, quindi, anche un lavoro a posteriori di riconduzione delle diverse fonti dei dati a formato comune con successivo instance matching, reso possibile dalla presenza di identificatori univoci presenti per ogni entità. 
+%\item \textbf{V}ariety: la raccolta dei dati non si è infatti limitata all'immagazzinamento tramite streaming, ma è stata applicata anche attraverso interrogazione a REST api necessitando, quindi, anche un lavoro a posteriori di riconduzione delle diverse fonti dei dati a formato comune con successivo instance matching, reso possibile dalla presenza di identificatori univoci presenti per ogni entità. 
 \end{enumerate}
 \subsection{Source}%WebSocket (RSVP) Rest API
 Meetup, come già detto, mette a disposizione parte dei dati in suo possesso relativi a membri iscritti alla piattaforma, gruppi creati ed eventi organizzati nella stessa. In particolare, i dati sono forniti in due modalità: 
@@ -195,7 +195,7 @@ Un esempio di dato di questo genere è riportato sotto allo scopo di mostrarne l
 	\end{itemize}    
 \end{itemize}
 Abbiamo proceduto ad estrarre tali dati da websocket, sfruttando Nifi (vedasi prossimo paragrafo).
-\paragraph{REST api:} Meetup permette anche un accesso piuttosto flessibile al database, esponendo tramite REST API informazioni riguardo a membri, gruppi ed eventi in formato JSON. Abbiamo sfruttato questa possibilità per arricchire i dati acquisiti in streaming: in particolare, abbiamo proceduto all'enrichment delle informazioni sui membri, integrando per ciascun membro:
+\paragraph{rest API:} Meetup permette anche un accesso piuttosto flessibile al database, esponendo tramite rest API informazioni riguardo a membri, gruppi ed eventi in formato JSON. Abbiamo sfruttato questa possibilità per arricchire i dati acquisiti in streaming: in particolare, abbiamo proceduto all'enrichment delle informazioni sui membri, integrando per ciascun membro:
 \begin{itemize}[noitemsep]
 \item la localizzazione spaziale, ovvero le coordinate geografiche (lat/lon) dichiarate in fase di registrazione così che il sistema di raccomandazione dell'applicazione possa suggerire gruppi su base geografica.
 \item i topic in cui l'utente ha dichiarato di avere interesse al momento dell'iscrizione alla piattaforma, anche in questo caso per permettere al sistema di raccomandazione di suggerire gruppi per cui l'utente potrebbe avere interesse.
@@ -217,7 +217,7 @@ I principali vantaggi che Nifi ci ha fornito sono la gestione facilitata della q
 \subsection{Kafka} %Lambda Arch. and blabla
 Considerata la natura dei dati a nostra disposizione, che ricordiamo consistere in un flusso di messaggi in streaming (RSVP), abbiamo deciso di fare un ingestion in Kafka, potendo successivamente esplorare, iterare, e preprocessare le informazioni tramite Python API.
 Abbiamo inoltre modificato i parametri di RetentionTime, in modo tale che Kafka fungesse da primo storage temporaneo, in grado di salvare all'interno di un topic tutti i messaggi acquisiti in real time streaming, per poi poterli processare successivamente senza correre il rischio di perdere qualche informazione.
-Come accennato, con l'API di Kafka per Python abbiamo potuto configurare un consumer per processare i dati, creando diversi \href{https://github.com/DBertazioli/NeoMeetup/tree/master/csv/struttura}{csv}, %(FIX: non saprei quanto entrare nei dettagli dei vari csv)
+Come accennato, con l'API di Kafka per Python abbiamo potuto configurare un consumer per processare i dati, creando diversi \href{https://github.com/DBertazioli/Armeetup/tree/master/csv/struttura}{csv}, %(FIX: non saprei quanto entrare nei dettagli dei vari csv)
  in modo da facilitare e rendere più efficiente l'import nel database finale.
 %(FIX: eventualmente accenna script per automatizzare)
 \subsection{Neo4j}% Storing and querying
@@ -226,15 +226,24 @@ Come accennato, con l'API di Kafka per Python abbiamo potuto configurare un cons
 \includegraphics[scale=0.57]{graph.png}
 \caption{\label{graph_neo4j} Schema graph DB}
 \end{figure}
-Abbiamo scelto di salvare i nostri dati in un database a grafo per via della loro struttura naturale, che ben si presta ad essere schematizzata con nodi principali, proprietà e relazioni che interconnettono tali nodi. Abbiamo provveduto quindi all'import dei dati in Neo4j, sfruttando il linguaggio Cypher e l'ottimizzazione dell'import via csv, dopo aver in un primo momento tentato un approccio tramite l'api Python Py2Neo. Per facilitare un'eventuale serializzazione del processo di import, abbiamo creato uno script (Bash) che, una volta creati i csv, consente di automatizzare le varie chiamate alla cypher-shell, dato che il processo di creazione del database risulta piuttosto laborioso ma facilmente standardizzabile (\href{https://github.com/DBertazioli/NeoMeetup/blob/master/Scripts/import_cypher.sh}{import.sh}). Il database così realizzato presenta circa 1 milione e mezzo di singoli nodi e circa 28 milioni di relazioni tra questi, con un tempo di import su Neo4j stimato in circa due ore.
-\subsection{Arango DB}
+Abbiamo scelto inizialmente di salvare i nostri dati in un database a grafo per via della loro struttura naturale, che ben si presta ad essere schematizzata con nodi principali, proprietà e relazioni che interconnettono tali nodi. Abbiamo provveduto quindi all'import dei dati in Neo4j, sfruttando il linguaggio Cypher e l'ottimizzazione dell'import via csv, dopo aver in un primo momento tentato un approccio tramite l'api Python Py2Neo. Per facilitare un'eventuale serializzazione del processo di import, abbiamo creato uno script (Bash) che, una volta creati i csv, consente di automatizzare le varie chiamate alla cypher-shell, dato che il processo di creazione del database risulta piuttosto laborioso ma facilmente standardizzabile (\href{https://github.com/DBertazioli/NeoMeetup/blob/master/Scripts/import_cypher.sh}{import.sh}).
+Questa soluzione però mal si prestava alla prospettiva di accumulare più dati, anche in vista di un possibile ampliamento degli orizzonti del progetto, dato che Neo4j non permette la distribuzione orizzontale dei propri database ma giova soltanto di una scalabilità di tipo verticale.
+\subsection{ArangoDB}
+Data a questo punto l'esigenza di trovare una soluzione che coniugasse il nostro bisogno di un database a grafo, ma che fosse anche in grado di essere scalabile orizzontalmente e quindi distribuibile con processi interni e non tramite segmentazione dei dati all'origine, anche nell'ottica di voler eventualmente implementare uno streaming continuo dall'RSVP API, abbiamo optato per ArangoDB, un DBMS multi-modello in grado di unire modelli documentale, a grafo e key-value con un solo linguaggio di programmazione. %nota riguardo la distribuzione del modello.
+Sfruttando il particolare concetto di grafo nativo in ArangoDB abbiamo così realizzato una \textit{collection} per ogni vertice ed una \textit{edge-collection} per ogni arco del grafo.
+Il database così realizzato presenta circa 1 milione e mezzo di singoli nodi e circa 28 milioni di relazioni tra questi, con un tempo di import su ArangoDB stimato in circa venti minuti.
 }
 \section{Results}
 \paragraph{Misure quantitative semplici}:
 %magari un grafico con relativo commento
 \paragraph{Utilizzo delle informazioni temporali}:
-Attingendo alle informazioni temporali degli eventi, presenti nei messaggi, ed applicando un'opportuna manipolazione per convertire l'originale formato timestamp in un formato umanamente più leggibile, siamo stati in grado di rispondere alla nostra seconda domanda di ricerca. Dopo aver infatti adattato i metadati temporali alle time zone così da avere una panoramica coerente sugli eventi Meetup tenutisi nel mondo, indipendentemente dal fuso orario, abbiamo provveduto a realizzare una tabella di Pivot, tenente conto della numerosità di partecipanti agli eventi discriminati per giorno della settimana e per fascia oraria della giornata. Una volta realizzata la tabella è stato quindi possibile procedere alla costruzione della \textit{heatmap} in fig.~ %aggiungere heatmap 
+Attingendo alle informazioni temporali degli eventi, presenti nei messaggi, ed applicando un'opportuna manipolazione per convertire l'originale formato timestamp in un formato umanamente più leggibile, siamo stati in grado di rispondere alla nostra seconda domanda di ricerca. Dopo aver infatti adattato i metadati temporali alle time zone così da avere una panoramica coerente sugli eventi Meetup tenutisi nel mondo, indipendentemente dal fuso orario, abbiamo provveduto a realizzare una tabella di Pivot, tenente conto della numerosità di partecipanti agli eventi discriminati per giorno della settimana e per fascia oraria della giornata. Una volta realizzata la tabella è stato quindi possibile procedere alla costruzione della \textit{heatmap} in \textbf{fig.~\ref{plot_heatmap}} 
 per rappresentare al meglio queste informazioni. Appare infatti chiaro dalla visualizzazione come i momenti migliori della settimana per organizzare un evento risultino essere il Martedì, il Mercoledì ed il Giovedì nella fascia oraria 18.00/20.00 ed il Sabato mattina tra le 10.00 e le 12.00. Ciò si conforma bene alla nostra intuizione che la maggior parte dell'utenza di Meetup sembrerebbe essere rappresentata da lavoratori, professionisti, che sono quindi più propensi a partecipare ad eventi in orario non lavorativo o durante giorni non lavorativi.
+\begin{figure}
+\centering
+\includegraphics[width = 9.2 cm, height = 5 cm]{heatmap_with_barplot_v3.jpg}
+\caption{\label{plot_heatmap} Heatmap distribuzione temporale degli eventi}
+\end{figure}
 \paragraph{Utilizzo delle informazioni spaziali}:
 %riferimento a mappa interattiva con link
 \paragraph{Valutazione efficacia sistema di raccomandazione}:
@@ -258,6 +267,12 @@ Durante la realizzazione del progetto abbiamo dovuto affrontare diverse problema
 \caption{\label{plot_cypher_py2neo} Differenza di prestazioni fra Cypher e Py2Neo API}
 \end{figure}
 \paragraph{Cypher vs Arangoimp}
+\begin{figure}
+\centering
+\includegraphics[scale=0.54]{viz_benchmark_cypher_arangoimp.jpeg}
+\caption{\label{plot_cypher_arangoimp} Differenza di prestazioni fra Cypher e Arangoimp}
+\end{figure}
+Come si può vedere in \textbf{fig.~ \ref{plot_cypher_arangoimp}}
 \paragraph{Scalability}: In prima istanza, dopo un primo streaming effettuato alla fine di dicembre 2018, abbiamo sfruttato questi dati per calibrare le nostre scelte in fatto di gestione dimensionalità. Questo primo streaming contava circa 1 milione di messaggi provenienti dall'API Meetup. Proprio grazie a questo quantitativo iniziale abbiamo potuto tarare le nostre decisioni su una dimensionalità realistica e già piuttosto complessa. Per questa ragione abbiamo deciso di sfruttare in prima istanza Kafka, che ha permesso di effettuare il primo storage senza essere condizionato in fase di consuming dalla dimensionalità dello storage stesso. Anche la scelta di un database a grafo, e nello specifico di Neo4j, è stata presa con l'intento di ottenere il massimo delle prestazioni possibili in fatto di scalabilità. Infine le scelte operate in fatto di processing dei dati con i dizionari per l'estrazione delle singole entità prima, e con la cypher shell per l'import di quelle entità su Neo4j dopo, si sono dimostrate essere vincenti per quello che è stato il vero e proprio streaming effettuato a febbraio 2019. Quest'ultimo infatti contava più di 2 milioni e mezzo di messaggi, con una dimensionalità finale del database di 1 milione e mezzo di singoli nodi e circa 28 milioni di relazioni tra questi.
 \paragraph{Integrazione dei dati tramite rest API}: parallelizzazione e frequent throttlig. %Darito completa questo
 \paragraph{Conversione dei metadati temporali}: Durante la fase di analisi dei dati con l'obiettivo di realizzare statistiche e visualizzazioni, ci siamo imbattuti nel problema della formattazione dei metadati temporali. Nello specifico tutti i metadati temporali provenienti dall'API di Meetup si presentano in formato timestamp in millisecondi con fuso orario UTC; questo rappresentava per noi un problema nella rappresentazione temporale degli eventi ad esempio, oppure per quella della sottoscrizione agli eventi da parte degli utenti. Per ovviare a questo inconveniente, e formattare questi metadati in formato date-time condizionati alle rispettive time-zone locali abbiamo sfruttato i metadati riguardanti la localizzazione degli utenti al momento della sottoscrizione agli eventi e, quindi, alla generazione del messaggio RSVP. Partendo quindi da queste informazioni in formato latitudine/longitudine abbiamo innanzitutto localizzato le corrispondenti time-zone attraverso la libreria \textit{timezonefinder} per python e, successivamente, attraverso la libreria \textit{pytz} abbiamo potuto convertire i timestamp in date-time condizionatamente alla time-zone prima definita. Lo sviluppo dei dati è visibile in \textbf{fig.~\ref{datetime_timezoned}}, dove è possibile visualizzare come il dataset si sia trasformato durante i passaggi descritti.
