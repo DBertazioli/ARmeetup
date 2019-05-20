@@ -1,0 +1,8 @@
+.ipynb_checkpoints
+nohup.out
+*.aux
+*.gz
+*.idx
+*.log
+*.out
+*.toc
