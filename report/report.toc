@@ -1,0 +1,25 @@
+\babel@toc {english}{}
+\contentsline {section}{\numberline {1}Goals}{2}{section.1}% 
+\contentsline {section}{\numberline {2}Implementation: Architecture}{2}{section.2}% 
+\contentsline {subsection}{\numberline {2.1}Covered point}{2}{subsection.2.1}% 
+\contentsline {subsection}{\numberline {2.2}Source}{2}{subsection.2.2}% 
+\contentsline {paragraph}{streaming data:}{2}{paragraph*.1}% 
+\contentsline {paragraph}{REST api:}{3}{paragraph*.2}% 
+\contentsline {subsection}{\numberline {2.3}Nifi}{3}{subsection.2.3}% 
+\contentsline {subsection}{\numberline {2.4}Kafka}{3}{subsection.2.4}% 
+\contentsline {subsection}{\numberline {2.5}Neo4j}{3}{subsection.2.5}% 
+\contentsline {subsection}{\numberline {2.6}Arango DB}{4}{subsection.2.6}% 
+\contentsline {section}{\numberline {3}Results}{4}{section.3}% 
+\contentsline {paragraph}{Misure quantitative semplici}{4}{paragraph*.5}% 
+\contentsline {paragraph}{Utilizzo delle informazioni temporali}{4}{paragraph*.6}% 
+\contentsline {paragraph}{Utilizzo delle informazioni spaziali}{4}{paragraph*.7}% 
+\contentsline {paragraph}{Valutazione efficacia sistema di raccomandazione}{4}{paragraph*.8}% 
+\contentsline {paragraph}{Symbolic Links}{4}{paragraph*.10}% 
+\contentsline {paragraph}{Ottimizzazione tempi di estrazione dei messaggi}{4}{paragraph*.11}% 
+\contentsline {paragraph}{Import Cypher vs Py2Neo}{4}{paragraph*.13}% 
+\contentsline {paragraph}{Cypher vs Arangoimp}{5}{paragraph*.15}% 
+\contentsline {paragraph}{Scalability}{5}{paragraph*.16}% 
+\contentsline {paragraph}{Integrazione dei dati tramite rest API}{5}{paragraph*.17}% 
+\contentsline {paragraph}{Conversione dei metadati temporali}{5}{paragraph*.18}% 
+\contentsline {section}{Acknowledgments}{5}{figure.caption.19}% 
+\contentsfinish 
