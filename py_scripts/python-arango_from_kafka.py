@@ -1,7 +1,16 @@
 #!/usr/bin/env python3.6
 # coding: utf-8
 
-# In[36]:
+# Author: Dario Bertazioli (d.bertazioli@campus.unimib.it)
+# Date: 17-05-19
+# Last_version: 20-05-19
+#
+# Parse and store the meetup RSVP streamed data 
+#(https://www.meetup.com/it-IT/meetup_api/docs/stream/2/rsvps) 
+#from Kafka to a ArangoDB database. Meant for online execution, while acquiring streaming data.  
+#
+# To do: optimize topic management, implement online member enrichment (decleared topics mainly)
+
 
 
 from __future__ import print_function
@@ -63,25 +72,13 @@ else:
     host= "localhost"
     port= "7474"
 
-
 # In[1]:
-
 
 consumer = KafkaConsumer(bootstrap_servers = "sandbox-hdf.hortonworks.com:6667",
                          auto_offset_reset = 'earliest',
-                         consumer_timeout_ms = 1000)
+                         consumer_timeout_ms = 3000)
 consumer.subscribe(['april_topic'])
 print("subscribed to april meetup topic")
-
-
-# In[3]:
-
-
-
-
-
-# In[4]:
-
 
 try:
     client = ArangoClient(protocol="http", host=host, port=port)
@@ -89,9 +86,7 @@ except Exception as e:
     print(e)
 client
 
-
 # In[5]:
-
 
 drop=True
 create=True
@@ -164,8 +159,7 @@ if create:
                     to_vertex_collections=['Group']
                 )
             print("creating edge_definition: {}".format("MEMBER_OF"))
-        
-        
+
         if theGraph.has_edge_definition('HOSTED_EVENT'):
             HOSTED_EVENT = theGraph.edge_collection("HOSTED_EVENT")
             print("creating edge_collection: {}".format("HOSTED_EVENT"))
@@ -225,9 +219,6 @@ if create:
                     to_vertex_collections=['Topic']
                 )
             print("creating edge_definition: {}".format("WILL_PARTICIPATE"))
-        
-            
-        #print(theGraph.vertex_collections())
             
             print("vertex colls: ", theGraph.vertex_collections())
     except Exception as err:
@@ -236,11 +227,7 @@ if create:
        #   % err)
         print(err, "\n err while resetting")
 
-
 # # Trying Batch Execution
-
-# In[15]:
-
 
 go=True
 if go:
@@ -280,17 +267,13 @@ if go:
                 g_id="Group/"+str(group_id)
                 j['group'].update({'_id':g_id})             
                 group = j['group']
+                group_topics = j['group']['group_topics']
                 
                 member_id = j['member']['member_id']
                 m_id="Member/"+str(member_id)
                 #j['member']['_key']=m_key
                 j['member'].update({'_id':m_id})
                 member=j['member']
-                
-                group_topics = j['group']['group_topics']
-                
-                
-                        
                 
                 event_id = j['event']['event_id']
                 e_id="Event/"+str(event_id)
@@ -369,9 +352,7 @@ if go:
                     
                     batch_db.collection('HOSTED_EVENT').insert({'_from': g_id,'_to': e_id, 'name':"HOSTED_EVENT"})
                     batch_db.collection('WILL_PARTICIPATE').insert({'_from': m_id,'_to': e_id, 'name':"WILL_PARTICIPATE"})
-                    
-                       
-                    
+
                 except Exception as ex:
                     print("inner for")
                     print(ex)
@@ -435,17 +416,11 @@ if go:
 
     batch_db.commit()
 
-
     if not stop:
-        print("reached line {} in {} s".format(len(enumerate(consumer)), (time.time()-start_t)))
+        print("reached line {} in {} s".format(count, (time.time()-start_t)))
 
 #print(topics)
 # In[ ]:
 
 sys.stdout = orig_stdout
 f.close()
-
-
-
-
-
