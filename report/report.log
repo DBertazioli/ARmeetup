@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.7)  21 MAY 2019 09:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.7)  21 MAY 2019 10:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -668,10 +668,20 @@ File: babel.def 2018/02/14 3.18 Babel common definitions
 \l@canadian = a dialect from \language\l@american 
 \l@australian = a dialect from \language\l@british 
 \l@newzealand = a dialect from \language\l@british 
+)
+(/usr/share/texlive/texmf-dist/tex/generic/babel-italian/italian.ldf
+Language: italian 2015/03/26 v1.3n Italian support from the babel system
+\it@lettering=\count117
+\it@doublequoteactive=\count118
+\it@ISOcompliance=\count119
 ))
+(/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2018/02/11 v2.5e e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count120
+)
 (/usr/share/texlive/texmf-dist/tex/latex/lipsum/lipsum.sty
 Package: lipsum 2014/07/27 v1.3 150 paragraphs of Lorem Ipsum dummy text
-\c@lips@count=\count117
+\c@lips@count=\count121
 )
 (/usr/share/texlive/texmf-dist/tex/latex/montserrat/montserrat.sty
 Package: montserrat 2017/02/26 v1.01
@@ -994,7 +1004,7 @@ Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
 \XKV@toks=\toks26
 \XKV@tempa@toks=\toks27
 )
-\XKV@depth=\count118
+\XKV@depth=\count122
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 ))
 
@@ -1049,7 +1059,6 @@ Package: letltxmacro 2016/05/16 v1.5 Let assignment for LaTeX macros (HO)
 Package: hopatch 2016/05/16 v1.3 Wrapper for package hooks (HO)
 Package: xcolor-patch 2016/05/16 xcolor patch
 Package: atveryend 2016/05/16 v1.9 Hooks at the very end of document (HO)
-Package atveryend Info: \enddocument detected (standard20110627).
 Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
 Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
 Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
@@ -1061,15 +1070,15 @@ Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
 Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
 )
 \@linkdim=\dimen154
-\Hy@linkcounter=\count119
-\Hy@pagecounter=\count120
+\Hy@linkcounter=\count123
+\Hy@pagecounter=\count124
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2018/02/06 v6.86b Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-\Hy@SavedSpaceFactor=\count121
+\Hy@SavedSpaceFactor=\count125
 
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
@@ -1081,7 +1090,7 @@ Package hyperref Info: Plain pages OFF on input line 4524.
 Package hyperref Info: Backreferencing OFF on input line 4529.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4762.
-\c@Hy@tempcnt=\count122
+\c@Hy@tempcnt=\count126
 
 (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip11
@@ -1089,7 +1098,7 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5115.
 \XeTeXLinkMargin=\dimen155
-\Fld@menulength=\count123
+\Fld@menulength=\count127
 \Field@Width=\dimen156
 \Fld@charsize=\dimen157
 Package hyperref Info: Hyper figures OFF on input line 6369.
@@ -1101,16 +1110,16 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6394.
 Package hyperref Info: PDF/A mode OFF on input line 6399.
 LaTeX Info: Redefining \ref on input line 6439.
 LaTeX Info: Redefining \pageref on input line 6443.
-\Hy@abspage=\count124
-\c@Item=\count125
-\c@Hfootnote=\count126
+\Hy@abspage=\count128
+\c@Item=\count129
+\c@Hfootnote=\count130
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2018/02/06 v6.86b Hyperref driver for pdfTeX
-\Fld@listcount=\count127
-\c@bookmark@seq@number=\count128
+\Fld@listcount=\count131
+\c@bookmark@seq@number=\count132
 
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
 Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
@@ -1119,62 +1128,62 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip63
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 59.
-Package hyperref Info: Option `breaklinks' set `true' on input line 59.
-Package hyperref Info: Option `bookmarksopen' set `false' on input line 59.
+Package hyperref Info: Option `colorlinks' set `true' on input line 62.
+Package hyperref Info: Option `breaklinks' set `true' on input line 62.
+Package hyperref Info: Option `bookmarksopen' set `false' on input line 62.
 
 (./report.aux)
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for LY1/ptm/m/n on input line 87.
-LaTeX Font Info:    Try loading font information for LY1+ptm on input line 87.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for LY1/ptm/m/n on input line 90.
+LaTeX Font Info:    Try loading font information for LY1+ptm on input line 90.
  (/usr/share/texlive/texmf-dist/tex/latex/ly1/ly1ptm.fd
 File: ly1ptm.fd 2001/02/01 font definitions for LY1/ptm using Berry names.
 )
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 87.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 87.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 90.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 90.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
 LaTeX Font Info:    Try loading font information for T1+Montserrat-TLF on input
- line 87.
+ line 90.
 
 (/usr/share/texlive/texmf-dist/tex/latex/montserrat/T1Montserrat-TLF.fd
 File: T1Montserrat-TLF.fd 2017/01/25 (autoinst) Font definitions for T1/Montser
 rat-TLF.
 )
 LaTeX Font Info:    Font shape `T1/Montserrat-TLF/l/n' will be
-(Font)              scaled to size 10.0pt on input line 87.
+(Font)              scaled to size 10.0pt on input line 90.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count129
+\scratchcounter=\count133
 \scratchdimen=\dimen158
 \scratchbox=\box30
-\nofMPsegments=\count130
-\nofMParguments=\count131
+\nofMPsegments=\count134
+\nofMParguments=\count135
 \everyMPshowfont=\toks28
-\MPscratchCnt=\count132
+\MPscratchCnt=\count136
 \MPscratchDim=\dimen159
-\MPnumerator=\count133
-\makeMPintoPDFobject=\count134
+\MPnumerator=\count137
+\makeMPintoPDFobject=\count138
 \everyMPtoPDFconversion=\toks29
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
@@ -1232,8 +1241,8 @@ Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             https://www.ctan.org/pkg/pageslts
-(lastpage)             ! on input line 87.
-LaTeX Info: Redefining \microtypecontext on input line 87.
+(lastpage)             ! on input line 90.
+LaTeX Info: Redefining \microtypecontext on input line 90.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -1247,37 +1256,39 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `Montserrat-TLF' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-\c@mv@tabular=\count135
-\c@mv@boldtabular=\count136
+LaTeX Info: Redefining \it@ocap on input line 90.
+LaTeX Info: Redefining \it@ccap on input line 90.
+\c@mv@tabular=\count139
+\c@mv@boldtabular=\count140
 \AtBeginShipoutBox=\box31
-Package hyperref Info: Link coloring ON on input line 87.
+Package hyperref Info: Link coloring ON on input line 90.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count137
+\c@section@level=\count141
 )
-LaTeX Info: Redefining \ref on input line 87.
-LaTeX Info: Redefining \pageref on input line 87.
-LaTeX Info: Redefining \nameref on input line 87.
+LaTeX Info: Redefining \ref on input line 90.
+LaTeX Info: Redefining \pageref on input line 90.
+LaTeX Info: Redefining \nameref on input line 90.
 
 (./report.out) (./report.out)
 \@outlinefile=\write3
 \openout3 = `report.out'.
 
 LaTeX Font Info:    Font shape `T1/Montserrat-TLF/l/n' will be
-(Font)              scaled to size 9.0pt on input line 92.
+(Font)              scaled to size 9.0pt on input line 95.
 LaTeX Font Info:    Font shape `T1/Montserrat-TLF/b/n' will be
-(Font)              scaled to size 9.0pt on input line 92.
+(Font)              scaled to size 9.0pt on input line 95.
 LaTeX Font Info:    Font shape `T1/Montserrat-TLF/b/n' will be
-(Font)              scaled to size 10.0pt on input line 92.
+(Font)              scaled to size 10.0pt on input line 95.
 LaTeX Font Info:    Font shape `T1/Montserrat-TLF/b/n' will be
-(Font)              scaled to size 20.0pt on input line 92.
+(Font)              scaled to size 20.0pt on input line 95.
 LaTeX Font Info:    Font shape `T1/Montserrat-TLF/l/n' will be
-(Font)              scaled to size 12.0pt on input line 92.
-LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 92
+(Font)              scaled to size 12.0pt on input line 95.
+LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 95
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
@@ -1287,39 +1298,39 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `ztmcm' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 92
+LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 95
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlztmcm.fd
 File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 92
+LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 95
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsztmcm.fd
 File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 92
+LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 95
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omxztmcm.fd
 File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 92.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 95.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 92.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 95.
 
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-ptm.cfg
 File: mt-ptm.cfg 2006/04/20 v1.7 microtype config. file: Times (RS)
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 92.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 95.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 92.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 95.
 
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
@@ -1328,63 +1339,51 @@ File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 92.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 95.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 92.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 95.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 92.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 95.
 LaTeX Font Info:    Font shape `T1/Montserrat-TLF/l/n' will be
-(Font)              scaled to size 8.0pt on input line 92.
+(Font)              scaled to size 8.0pt on input line 95.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 92.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 95.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 92.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 95.
 LaTeX Font Info:    Font shape `T1/Montserrat-TLF/l/n' will be
-(Font)              scaled to size 6.0pt on input line 92.
+(Font)              scaled to size 6.0pt on input line 95.
 LaTeX Font Info:    Font shape `T1/Montserrat-TLF/l/it' will be
-(Font)              scaled to size 8.0pt on input line 92.
+(Font)              scaled to size 8.0pt on input line 95.
 LaTeX Font Info:    Font shape `T1/Montserrat-TLF/b/n' will be
-(Font)              scaled to size 8.0pt on input line 92.
+(Font)              scaled to size 8.0pt on input line 95.
 LaTeX Font Info:    Font shape `T1/Montserrat-TLF/b/n' will be
-(Font)              scaled to size 12.0pt on input line 93.
+(Font)              scaled to size 12.0pt on input line 96.
  (./report.toc)
 \tf@toc=\write4
 \openout4 = `report.toc'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 103--114
+Underfull \hbox (badness 10000) in paragraph at lines 106--117
 
  []
 
 
-Overfull \hbox (0.27101pt too wide) in paragraph at lines 103--114
-\T1/Montserrat-TLF/l/n/9 (-20) vorire il sis-tema di rac-co-man-dazione. Questi
- topic spaziano
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 103--114
+Underfull \hbox (badness 10000) in paragraph at lines 106--117
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 103--114
+Underfull \hbox (badness 10000) in paragraph at lines 106--117
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 103--114
+Underfull \hbox (badness 10000) in paragraph at lines 106--117
 
  []
 
 
-Overfull \hbox (1.12978pt too wide) in paragraph at lines 115--116
-\T1/Montserrat-TLF/l/n/9 (-20) met-tere in con-tatto per-sone e pro-fes-sion-is
-ti di svariati
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 116--117
+Underfull \hbox (badness 10000) in paragraph at lines 119--120
 
  []
 
@@ -1392,41 +1391,24 @@ Underfull \hbox (badness 10000) in paragraph at lines 116--117
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 125--129
+Underfull \hbox (badness 10000) in paragraph at lines 128--132
 
  []
 
 LaTeX Font Info:    Try loading font information for TS1+Montserrat-TLF on inpu
-t line 129.
+t line 132.
 (/usr/share/texlive/texmf-dist/tex/latex/montserrat/TS1Montserrat-TLF.fd
 File: TS1Montserrat-TLF.fd 2017/01/25 (autoinst) Font definitions for TS1/Monts
 errat-TLF.
 )
 LaTeX Font Info:    Font shape `TS1/Montserrat-TLF/l/n' will be
-(Font)              scaled to size 9.0pt on input line 129.
+(Font)              scaled to size 9.0pt on input line 132.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `Montserrat-TLF' (encoding: TS1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-
-Overfull \hbox (2.12694pt too wide) in paragraph at lines 132--133
-\T1/Montserrat-TLF/l/n/9 (-20) man-dazione della pi-attaforma, sem-pre con-side
-rando
- []
-
 LaTeX Font Info:    Font shape `T1/Montserrat-TLF/l/it' will be
-(Font)              scaled to size 9.0pt on input line 141.
-
-Overfull \hbox (5.38966pt too wide) in paragraph at lines 148--149
-\T1/Montserrat-TLF/l/n/9 (-20) dati in suo pos-sesso rel-a-tivi a mem-bri is-cr
-itti alla pi-attaforma,
- []
-
-
-Overfull \hbox (1.68192pt too wide) in paragraph at lines 166--167
-[]\T1/Montserrat-TLF/l/n/9 (-20) group_country: two-letter code of group's home
-
- []
+(Font)              scaled to size 9.0pt on input line 144.
 
 
 Package Fancyhdr Warning: \headheight is too small (11.0pt): 
@@ -1435,52 +1417,37 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [2]
-Overfull \hbox (14.19075pt too wide) in paragraph at lines 201--202
-\T1/Montserrat-TLF/l/n/9 (-20) così che il sis-tema di rac-co-man-dazione dell'
-applicazione
- []
-
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 204.
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
+LaTeX Font Info:    Font shape `T1/Montserrat-TLF/l/n' will be
+(Font)              scaled to size 7.0pt on input line 202.
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 202.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
 
 LaTeX Font Warning: Font shape `T1/pcr/l/n' undefined
-(Font)              using `T1/pcr/m/n' instead on input line 204.
+(Font)              using `T1/pcr/m/n' instead on input line 202.
 
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `pcr' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-
-Overfull \hbox (4.44325pt too wide) in paragraph at lines 204--208
-\T1/pcr/m/n/9 api . meetup . com / 2 / members$[][]\T1/Montserrat-TLF/l/n/9 (-2
-0) ) via python script, chiedendo
- []
-
-<images/nifi_workflow.png, id=86, 845.1575pt x 649.42625pt>
+<images/nifi_workflow.png, id=88, 845.1575pt x 649.42625pt>
 File: images/nifi_workflow.png Graphic file (type png)
 <use images/nifi_workflow.png>
-Package pdftex.def Info: images/nifi_workflow.png  used on input line 210.
+Package pdftex.def Info: images/nifi_workflow.png  used on input line 213.
 (pdftex.def)             Requested size: 253.54921pt x 194.82938pt.
 
-Overfull \hbox (4.01857pt too wide) in paragraph at lines 210--211
+Overfull \hbox (4.01857pt too wide) in paragraph at lines 213--214
 [][] 
  []
 
-
-Overfull \hbox (14.64691pt too wide) in paragraph at lines 218--219
-[]\T1/Montserrat-TLF/l/n/9 (-20) un nodo Pub-lishKafka, co-modo per ef-fet-tuar
-e l'ingestion
- []
-
-<./images/graph.png, id=91, 438.9198pt x 301.3659pt>
+<./images/graph.png, id=93, 438.9198pt x 301.3659pt>
 File: ./images/graph.png Graphic file (type png)
 <use ./images/graph.png>
-Package pdftex.def Info: ./images/graph.png  used on input line 231.
+Package pdftex.def Info: ./images/graph.png  used on input line 234.
 (pdftex.def)             Requested size: 250.18687pt x 171.78033pt.
 
-Overfull \hbox (0.65623pt too wide) in paragraph at lines 231--232
+Overfull \hbox (0.65623pt too wide) in paragraph at lines 234--235
  [][] 
  []
 
@@ -1491,19 +1458,14 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [3 <./images/nifi_workflow.png>]
-Overfull \hbox (1.41798pt too wide) in paragraph at lines 237--240
-\T1/Montserrat-TLF/l/n/9 (-20) tramite seg-men-tazione dei dati all'origine, an
--che nell'ottica
- []
-
-<./images/heatmap_with_barplot_v3.jpg, id=106, 1062.00764pt x 460.72125pt>
+<./images/heatmap_with_barplot_v3.jpg, id=109, 1062.00764pt x 460.72125pt>
 File: ./images/heatmap_with_barplot_v3.jpg Graphic file (type jpg)
 <use ./images/heatmap_with_barplot_v3.jpg>
 Package pdftex.def Info: ./images/heatmap_with_barplot_v3.jpg  used on input li
-ne 249.
+ne 252.
 (pdftex.def)             Requested size: 261.75792pt x 142.2597pt.
 
-Overfull \hbox (12.22728pt too wide) in paragraph at lines 249--250
+Overfull \hbox (12.22728pt too wide) in paragraph at lines 252--253
  [][] 
  []
 
@@ -1514,43 +1476,40 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [4 <./images/graph.png (PNG copy)> <./images/heatmap_with_barplot_v3.jpg>]
-<./images/viz_benchmark_lists_dicts.jpeg, id=121, 484.81125pt x 317.68687pt>
+<./images/viz_benchmark_lists_dicts.jpeg, id=124, 484.81125pt x 317.68687pt>
 File: ./images/viz_benchmark_lists_dicts.jpeg Graphic file (type jpg)
 <use ./images/viz_benchmark_lists_dicts.jpeg>
 Package pdftex.def Info: ./images/viz_benchmark_lists_dicts.jpeg  used on input
- line 265.
+ line 268.
 (pdftex.def)             Requested size: 261.79417pt x 171.54834pt.
 
-Overfull \hbox (12.26353pt too wide) in paragraph at lines 265--266
+Overfull \hbox (12.26353pt too wide) in paragraph at lines 268--269
  [][] 
  []
 
-
-Overfull \hbox (1.2537pt too wide) in paragraph at lines 262--268
-\T1/Montserrat-TLF/l/n/9 (-20) saggi, che per la natura dello stream-ing risul-
-ta-vano ripetersi
- []
-
-<./images/viz_benchmark_cypher_py2neo.jpeg, id=123, 484.81125pt x 317.68687pt>
+<./images/viz_benchmark_cypher_py2neo.jpeg, id=126, 484.81125pt x 317.68687pt>
 File: ./images/viz_benchmark_cypher_py2neo.jpeg Graphic file (type jpg)
 <use ./images/viz_benchmark_cypher_py2neo.jpeg>
 Package pdftex.def Info: ./images/viz_benchmark_cypher_py2neo.jpeg  used on inp
-ut line 271.
+ut line 274.
 (pdftex.def)             Requested size: 261.79417pt x 171.54834pt.
 
-Overfull \hbox (12.26353pt too wide) in paragraph at lines 271--272
+Overfull \hbox (12.26353pt too wide) in paragraph at lines 274--275
  [][] 
  []
 
-<./images/viz_benchmark_cypher_arangoimp.jpeg, id=124, 484.81125pt x 317.68687p
+
+Underfull \vbox (badness 3460) has occurred while \output is active []
+
+<./images/viz_benchmark_cypher_arangoimp.jpeg, id=127, 484.81125pt x 317.68687p
 t>
 File: ./images/viz_benchmark_cypher_arangoimp.jpeg Graphic file (type jpg)
 <use ./images/viz_benchmark_cypher_arangoimp.jpeg>
 Package pdftex.def Info: ./images/viz_benchmark_cypher_arangoimp.jpeg  used on 
-input line 277.
+input line 280.
 (pdftex.def)             Requested size: 261.79417pt x 171.54834pt.
 
-Overfull \hbox (12.26353pt too wide) in paragraph at lines 277--278
+Overfull \hbox (12.26353pt too wide) in paragraph at lines 280--281
  [][] 
  []
 
@@ -1562,19 +1521,14 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
 
 [5 <./images/viz_benchmark_lists_dicts.jpeg> <./images/viz_benchmark_cypher_py2
 neo.jpeg> <./images/viz_benchmark_cypher_arangoimp.jpeg>]
-Overfull \hbox (4.46437pt too wide) in paragraph at lines 282--283
-[] []\T1/Montserrat-TLF/b/n/9 In-te-grazione dei dati tramite rest API[] \T1/Mo
-ntserrat-TLF/l/n/9 (-20) : par-al-leliz-zazione
- []
-
-<./images/datetime_timezoned.PNG, id=139, 490.33188pt x 115.43124pt>
+<./images/datetime_timezoned.PNG, id=142, 490.33188pt x 115.43124pt>
 File: ./images/datetime_timezoned.PNG Graphic file (type png)
 <use ./images/datetime_timezoned.PNG>
 Package pdftex.def Info: ./images/datetime_timezoned.PNG  used on input line 28
-6.
+8.
 (pdftex.def)             Requested size: 256.08134pt x 99.5842pt.
 
-Overfull \hbox (6.5507pt too wide) in paragraph at lines 286--287
+Overfull \hbox (6.5507pt too wide) in paragraph at lines 288--289
  [][] 
  []
 
@@ -1590,44 +1544,55 @@ Package Fancyhdr Warning: \headheight is too small (11.0pt):
 [6
 
  <./images/datetime_timezoned.PNG>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 305.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 305.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 307.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 307.
  (./report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 305.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 305.
-Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 916B9044976B1B2D9B06186F650BC278;540.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 307.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 307.
 
+
+Package rerunfilecheck Warning: File `report.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `report.out':
+(rerunfilecheck)             Before: 916B9044976B1B2D9B06186F650BC278;540
+(rerunfilecheck)             After:  BD5F91F30C62C7A389861B71D6015245;540.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 305.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  )
 (\end occurred inside a group at level 1)
 
-### simple group (level 1) entered at line 139 ({)
+### simple group (level 1) entered at line 142 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 13382 strings out of 494871
- 206707 string characters out of 6179252
- 425760 words of memory out of 5000000
- 16217 multiletter control sequences out of 15000+600000
- 131632 words of font info for 220 fonts, out of 8000000 for 9000
+ 13788 strings out of 494871
+ 211872 string characters out of 6179252
+ 436926 words of memory out of 5000000
+ 16598 multiletter control sequences out of 15000+600000
+ 140627 words of font info for 233 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  43i,11n,77p,1612b,704s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/us
-r/share/texlive/texmf-dist/fonts/enc/dvips/montserrat/zmo_es6tpc.enc}{/usr/shar
-e/texlive/texmf-dist/fonts/enc/dvips/montserrat/zmo_xu4w3w.enc}{/usr/share/texl
-ive/texmf-dist/fonts/enc/dvips/montserrat/zmo_wieltn.enc}</usr/share/texlive/te
-xmf-dist/fonts/type1/public/montserrat/Montserrat-Bold.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/public/montserrat/Montserrat-Light.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/montserrat/Montserrat-LightItalic.pfb></usr/sh
-are/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on report.pdf (6 pages, 1784025 bytes).
+pdfTeX warning (dest): name{figure.caption.21} has been referen
+ced but does not exist, replaced by a fixed one
+
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texlive/
+texmf-dist/fonts/enc/dvips/montserrat/zmo_es6tpc.enc}{/usr/share/texlive/texmf-
+dist/fonts/enc/dvips/montserrat/zmo_xu4w3w.enc}{/usr/share/texlive/texmf-dist/f
+onts/enc/dvips/montserrat/zmo_wieltn.enc}</usr/share/texlive/texmf-dist/fonts/t
+ype1/public/montserrat/Montserrat-Bold.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/public/montserrat/Montserrat-Light.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/montserrat/Montserrat-LightItalic.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/urw/times/utmr8a.pfb>
+Output written on report.pdf (6 pages, 1785730 bytes).
 PDF statistics:
- 184 PDF objects out of 1000 (max. 8388607)
- 150 compressed objects within 2 object streams
- 43 named destinations out of 1000 (max. 500000)
- 41076 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 187 PDF objects out of 1000 (max. 8388607)
+ 153 compressed objects within 2 object streams
+ 44 named destinations out of 1000 (max. 500000)
+ 42100 words of extra memory for PDF output out of 42996 (max. 10000000)
 

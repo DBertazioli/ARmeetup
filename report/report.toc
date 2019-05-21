@@ -1,4 +1,5 @@
-\babel@toc {english}{}
+\babel@toc {italian}{}
+\babel@toc {italian}{}
 \contentsline {section}{\numberline {1}Goals}{2}{section.1}
 \contentsline {section}{\numberline {2}Implementation: Architecture}{2}{section.2}
 \contentsline {subsection}{\numberline {2.1}Covered points}{2}{subsection.2.1}
@@ -19,7 +20,6 @@
 \contentsline {paragraph}{Import Cypher vs Py2Neo}{5}{paragraph*.14}
 \contentsline {paragraph}{Cypher vs Arangoimp}{5}{paragraph*.16}
 \contentsline {paragraph}{Scalability}{5}{paragraph*.18}
-\contentsline {paragraph}{Integrazione dei dati tramite rest API}{6}{paragraph*.19}
-\contentsline {paragraph}{Conversione dei metadati temporali}{6}{paragraph*.20}
-\contentsline {section}{Acknowledgments}{6}{figure.caption.21}
+\contentsline {paragraph}{Conversione dei metadati temporali}{6}{paragraph*.19}
+\contentsline {section}{Acknowledgments}{6}{figure.caption.20}
 \contentsfinish 

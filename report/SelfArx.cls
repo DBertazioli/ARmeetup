@@ -90,13 +90,13 @@ justification=raggedright]{caption}
   {\color{color1}\large\sffamily\bfseries}
   {}
   {0em}
-  {\colorbox{color2!10}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\centering\arabic{section}. #1}}}
+  {\colorbox{color2!20}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\centering\arabic{section}. #1}}}
   []
 \titleformat{name=\section,numberless}
   {\color{color1}\large\sffamily\bfseries}
   {}
   {0em}
-  {\colorbox{color2!10}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\centering#1}}}
+  {\colorbox{color2!20}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\centering#1}}}
   []  
 \titleformat{\subsection}
   {\color{color1}\sffamily\bfseries}
