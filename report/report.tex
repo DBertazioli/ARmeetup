@@ -62,17 +62,18 @@
 %	ARTICLE INFORMATION
 %----------------------------------------------------------------------------------------
 
-\JournalInfo{\includegraphics[scale=0.125]{NeoMeetup}}  
+\JournalInfo{~}%\includegraphics[scale=0.125]{NeoMeetup}}  
 %Journal information
 \Archive{ } % Additional notes (e.g. copyright, DOI, review/research article)
 
-\PaperTitle{ArMeetup: blabla} % Article title
+\PaperTitle{ArMeetup: \\
+Explore the Meetup Social Network in ArangoDB} % Article title
 
 \Authors{Dario Bertazioli\textsuperscript{1}, Fabrizio D'Intinosante\textsuperscript{1}, Massimiliano Perletti\textsuperscript{1}*} % Authors
 \affiliation{\textsuperscript{1}\textit{Data Science, Department of Computer Science, University of Milano Bicocca, Milan, Italy}} % Author affiliation
 \affiliation{*\textbf{Corresponding author}: m.perletti@campus.unimib.it} % Corresponding author
 
-\Keywords{Meetup --- ADD KEYWORDS--- Keyword3} % Keywords - if you don't want any simply remove all the text between the curly brackets
+\Keywords{Meetup --- ArangoDB --- SocialNetwork --- MAURINO} % Keywords - if you don't want any simply remove all the text between the curly brackets
 \newcommand{\keywordname}{Keywords} % Defines the keywords heading name
 
 %----------------------------------------------------------------------------------------
@@ -195,11 +196,15 @@ Un esempio di dato di questo genere è riportato sotto allo scopo di mostrarne l
 	\end{itemize}    
 \end{itemize}
 Abbiamo proceduto ad estrarre tali dati da websocket, sfruttando Nifi (vedasi prossimo paragrafo).
-\paragraph{rest API:} Meetup permette anche un accesso piuttosto flessibile al database, esponendo tramite rest API informazioni riguardo a membri, gruppi ed eventi in formato JSON. Abbiamo sfruttato questa possibilità per arricchire i dati acquisiti in streaming: in particolare, abbiamo proceduto all'enrichment delle informazioni sui membri, integrando per ciascun membro:
+\paragraph{rest API:} Meetup permette anche un accesso piuttosto flessibile al database, esponendo tramite rest API informazioni riguardo a membri, gruppi ed eventi in formato JSON. Abbiamo sfruttato questa possibilità per arricchire i dati acquisiti in streaming. In particolare, abbiamo proceduto all'enrichment delle informazioni sui membri, integrando per ciascun utente:
 \begin{itemize}[noitemsep]
 \item la localizzazione spaziale, ovvero le coordinate geografiche (lat/lon) dichiarate in fase di registrazione così che il sistema di raccomandazione dell'applicazione possa suggerire gruppi su base geografica.
 \item i topic in cui l'utente ha dichiarato di avere interesse al momento dell'iscrizione alla piattaforma, anche in questo caso per permettere al sistema di raccomandazione di suggerire gruppi per cui l'utente potrebbe avere interesse.
 \end{itemize}
+L'integrazione avviene tramite http(s) request (a \url{https://api.meetup.com/2/members}) via python script, chiedendo alla rest api di restituire informazioni in base al'ID dello specifico membro, iterando quindi su tutti gli utenti.
+Per ovviare al numero di richieste al minuto piuttosto limitato abbiamo implementato un sistema a più chiavi, facendo un tuning della frequenza di richiesta in modo tale che risultasse appena al di sotto della soglia massima tollerata.
+Dunque, dopo aver partizionato in modo opportuno la lista di utenti in nostro possesso, abbiamo proceduto all'enrichment con richieste parallele. 
+Inoltre, abbiamo preventivamente stimato il tempo totale necessario all'enrichment per tutti i (più di $800000$) membri con tre richieste parallele, controllando che fosse tollerabile.
 \subsection{Nifi}% Producer and blabla
 \begin{figure}
 \includegraphics[scale=0.3]{images/nifi_workflow.png}
@@ -232,7 +237,7 @@ Questa soluzione però mal si prestava alla prospettiva di accumulare più dati,
 Data a questo punto l'esigenza di trovare una soluzione che coniugasse il nostro bisogno di un database a grafo, ma che fosse anche in grado di essere scalabile orizzontalmente e quindi distribuibile con processi interni e non tramite segmentazione dei dati all'origine, anche nell'ottica di voler eventualmente implementare uno streaming continuo dall'RSVP API, abbiamo optato per ArangoDB, un DBMS multi-modello in grado di unire modelli documentale, a grafo e key-value con un solo linguaggio di programmazione. %nota riguardo la distribuzione del modello.
 Sfruttando il particolare concetto di grafo nativo in ArangoDB abbiamo così realizzato una \textit{collection} per ogni vertice ed una \textit{edge-collection} per ogni arco del grafo.
 Il database così realizzato presenta circa 1 milione e mezzo di singoli nodi e circa 28 milioni di relazioni tra questi, con un tempo di import su ArangoDB stimato in circa venti minuti.
-}
+
 \section{Results}
 \paragraph{Misure quantitative semplici}:
 %magari un grafico con relativo commento
@@ -278,7 +283,7 @@ Come si può vedere in \textbf{fig.~ \ref{plot_cypher_arangoimp}}
 \paragraph{Conversione dei metadati temporali}: Durante la fase di analisi dei dati con l'obiettivo di realizzare statistiche e visualizzazioni, ci siamo imbattuti nel problema della formattazione dei metadati temporali. Nello specifico tutti i metadati temporali provenienti dall'API di Meetup si presentano in formato timestamp in millisecondi con fuso orario UTC; questo rappresentava per noi un problema nella rappresentazione temporale degli eventi ad esempio, oppure per quella della sottoscrizione agli eventi da parte degli utenti. Per ovviare a questo inconveniente, e formattare questi metadati in formato date-time condizionati alle rispettive time-zone locali abbiamo sfruttato i metadati riguardanti la localizzazione degli utenti al momento della sottoscrizione agli eventi e, quindi, alla generazione del messaggio RSVP. Partendo quindi da queste informazioni in formato latitudine/longitudine abbiamo innanzitutto localizzato le corrispondenti time-zone attraverso la libreria \textit{timezonefinder} per python e, successivamente, attraverso la libreria \textit{pytz} abbiamo potuto convertire i timestamp in date-time condizionatamente alla time-zone prima definita. Lo sviluppo dei dati è visibile in \textbf{fig.~\ref{datetime_timezoned}}, dove è possibile visualizzare come il dataset si sia trasformato durante i passaggi descritti.
 \begin{figure}
 \centering
-\includegraphics[width = 9 cm, height = 3.5 cm]{datetime_timezoned.png}
+\includegraphics[width = 9 cm, height = 3.5 cm]{datetime_timezoned.PNG}
 \caption{\label{datetime_timezoned} Passaggi conversione timestamp into datetime timezoned}
 \end{figure}
 }
