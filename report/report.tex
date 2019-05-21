@@ -137,7 +137,6 @@ Cercando di ricreare questa rete ci siamo posti alcuni obiettivi, considerando a
 L'obiettivo del progetto, in sintesi, è quello di identificare correlazioni o tracce significative che possano determinare delle buone regole nella creazione di eventi di notevole impatto sociale; una piccola guida "\textbf{How to}" su come dev'essere organizzato un evento di successo.
 }
 %------------------------------------------------
-\newpage
 \section{Implementation: Architecture}
 {\small %FIXME: IMPORTANT: da aggiungere caratteristiche quali tolerance failure et similia un po' ovunque
 \subsection{Covered points}
@@ -243,7 +242,23 @@ Il database così realizzato presenta circa 1 milione e mezzo di singoli nodi e 
 
 \section{Results}
 \paragraph{Misure quantitative semplici}:
-%magari un grafico con relativo commento
+Con lo scopo di ispezionare alcune misure quantitative abbiamo sottoposto il DB da noi creato ad alcune query per estrarre informazioni quali:
+\begin{itemize}[noitemsep]
+\item Quantità di eventi per Paese;
+\item Quantità di gruppi per Paese;
+\item Numero massimo di partecipanti agli eventi per Paese;
+\item Numero medio degli ospiti portati da ogni partecipante agli eventi;
+\item Trend topic per gli utenti;
+\item Trend topic per i gruppi.
+\end{itemize}
+Come mostrato in \textbf{fig.~\ref{rose_plot}} i Paesi che presentano il più alto numero di gruppi attivi sono quelli anglofoni come USA e Gb, e sempre attraverso la visualizzazione sembrerebbe proprio che il numero totale di eventi organizzati in un Paese dipenda direttamente dal numero di gruppi attivi per quel Paese. 
+Anche per quanto riguarda il numero massimo di partecipanti agli eventi per Paese gli USA ovviamente spiccano per conformazione demografica rispetto ai paesi europei.
+In merito invece ai trend topic, per i gruppi i più quotati sembrerebbero quelli inerenti benessere, argomenti sociali, divertimento ed impresa mentre, per gli utenti, i più presi in considerazione sembrerebbero quelli di tipo tecnologico ed inerenti la computer science.
+\begin{figure}
+\centering
+\includegraphics[width = 9.2 cm, height = 5 cm]{rose_plot_quantitative.jpeg}
+\caption{\label{rose_plot} Rose plot dei dieci paesi principali per numero di gruppi ed eventi}
+\end{figure}
 \paragraph{Utilizzo delle informazioni temporali}:
 Attingendo alle informazioni temporali degli eventi, presenti nei messaggi, ed applicando un'opportuna manipolazione per convertire l'originale formato timestamp in un formato umanamente più leggibile, siamo stati in grado di rispondere alla nostra seconda domanda di ricerca. Dopo aver infatti adattato i metadati temporali alle time zone così da avere una panoramica coerente sugli eventi Meetup tenutisi nel mondo, indipendentemente dal fuso orario, abbiamo provveduto a realizzare una tabella di Pivot, tenente conto della numerosità di partecipanti agli eventi discriminati per giorno della settimana e per fascia oraria della giornata. Una volta realizzata la tabella è stato quindi possibile procedere alla costruzione della \textit{heatmap} in \textbf{fig.~\ref{plot_heatmap}} 
 per rappresentare al meglio queste informazioni. Appare infatti chiaro dalla visualizzazione come i momenti migliori della settimana per organizzare un evento risultino essere il Martedì, il Mercoledì ed il Giovedì nella fascia oraria 18.00/20.00 ed il Sabato mattina tra le 10.00 e le 12.00. Ciò si conforma bene alla nostra intuizione che la maggior parte dell'utenza di Meetup sembrerebbe essere rappresentata da lavoratori, professionisti, che sono quindi più propensi a partecipare ad eventi in orario non lavorativo o durante giorni non lavorativi.
@@ -253,9 +268,14 @@ per rappresentare al meglio queste informazioni. Appare infatti chiaro dalla vis
 \caption{\label{plot_heatmap} Heatmap distribuzione temporale degli eventi}
 \end{figure}
 \paragraph{Utilizzo delle informazioni spaziali}:
-%riferimento a mappa interattiva con link
+Per esplorare a fondo le informazioni in nostro possesso, abbiamo sfruttato i metadati spaziali presenti nei messaggi per realizzare una visualizzazione interattiva in forma di mappa esplorabile focalizzata sull'Europa...
 \paragraph{Valutazione efficacia sistema di raccomandazione}:
-%distribuzione Jaccard similarity
+Con lo scopo di valutare il sistema di raccomandazione della piattaforma e sfruttando le informazioni a nostra disposizione abbiamo calcolato la Jaccard similarity per ogni utente, prendendo in considerazione i topic comuni tra quelli dichiarati dall'utente in fase di registrazione ed i topic dei gruppi di cui l'utente fa parte come si vede in \textbf{fig.~\ref{jaccard_similarity}}. Questa misurazione ci ha permesso di giungere ad una certa constatazione riguardo la modalità di acquisizione dei dati. La nostra misurazione risulterebbe infatti inficiata dalla raccolta dati tramite streaming poichè noi siamo a conoscenza, per ogni utente, soltanto dei gruppi di cui fa parte condizionatamente al fatto che durante il periodo di streaming egli abbia risposto ad un evento organizzato da questi gruppi, e non della totalità dei gruppi a cui sarebbe iscritto. Questo particolare molto probabilmente contribuisce in maniera significativa alla determinazione di una bassa similarità tra i topic conformi ai gusti dichiarati dagli utenti e la totalità dei topic dichiarati sia dagli utenti che dai gruppi. Va inoltre tenuto conto che sia gli utenti in fase di registrazione che i gruppi al momento della creazione, molto probabilmente, prestano poca attenzione alla quantità e alla sparsità dei topic inseriti nel sistema, condizionando così la nostra misurazione. 
+\begin{figure}
+\centering
+\includegraphics[width = 8.7 cm, height = 5 cm]{jaccard_similarity.jpeg}
+\caption{\label{jaccard_similarity} Jaccard similarity degli utenti riguardo i topic corrispondenti tra quelli dichiarati in fase di registrazione e quelli dei gruppi di cui fanno parte}
+\end{figure}
 %------------------------------------------------
 \phantomsection
 \section*{Interesting Challenges}
@@ -274,13 +294,13 @@ Durante la realizzazione del progetto abbiamo dovuto affrontare diverse problema
 \includegraphics[scale=0.54]{viz_benchmark_cypher_py2neo.jpeg}
 \caption{\label{plot_cypher_py2neo} Differenza di prestazioni fra Cypher e Py2Neo API}
 \end{figure}
-\paragraph{Cypher vs Arangoimp}
+\paragraph{Import Cypher vs Arangoimp}
 \begin{figure}
 \centering
 \includegraphics[scale=0.54]{viz_benchmark_cypher_arangoimp.jpeg}
 \caption{\label{plot_cypher_arangoimp} Differenza di prestazioni fra Cypher e Arangoimp}
 \end{figure}
-Come si può vedere in \textbf{fig.~ \ref{plot_cypher_arangoimp}}
+Come si può vedere in \textbf{fig.~\ref{plot_cypher_arangoimp}} il confronto tra Cypher e Arangoimp nell'import dati si gioca sull'ordine dei millisecondi per piccole importazioni mentre di pochi secondi per grandi moli di dati. Arangoimp si dimostra sostanzialmente costante per i volumi testati, mentre l'import tramite Cypher comincia a crescere in termini di tempo richiesto partendo da volumi superiori a 100mila istanze. Anche per quanto riguarda l'import delle relazioni tra i nodi Arangoimp si è dimostrato molto più rapido. Questo probabilmente è ascrivibile al fatto che Neo4j sfrutta un meccanismo chiamato Index free adjacency che permette di incrementare le prestazioni a livello di query a discapito di una maggiore lentezza in fase di import. 
 \paragraph{Scalability}: In prima istanza, dopo un primo streaming effettuato alla fine di dicembre 2018, abbiamo sfruttato questi dati per calibrare le nostre scelte in fatto di gestione dimensionalità. Questo primo streaming contava circa 1 milione di messaggi provenienti dall'API Meetup. Proprio grazie a questo quantitativo iniziale abbiamo potuto tarare le nostre decisioni su una dimensionalità realistica e già piuttosto complessa. Per questa ragione abbiamo deciso di sfruttare in prima istanza Kafka, che ha permesso di effettuare il primo storage senza essere condizionato in fase di consuming dalla dimensionalità dello storage stesso. Anche la scelta di un database a grafo, e nello specifico di Neo4j, è stata presa con l'intento di ottenere il massimo delle prestazioni possibili in fatto di scalabilità. Infine le scelte operate in fatto di processing dei dati con i dizionari per l'estrazione delle singole entità prima, e con la cypher shell per l'import di quelle entità su Neo4j dopo, si sono dimostrate essere vincenti per quello che è stato il vero e proprio streaming effettuato a febbraio 2019. Quest'ultimo infatti contava più di 2 milioni e mezzo di messaggi, con una dimensionalità finale del database di 1 milione e mezzo di singoli nodi e circa 28 milioni di relazioni tra questi.
 \paragraph{Conversione dei metadati temporali}: Durante la fase di analisi dei dati con l'obiettivo di realizzare statistiche e visualizzazioni, ci siamo imbattuti nel problema della formattazione dei metadati temporali. Nello specifico tutti i metadati temporali provenienti dall'API di Meetup si presentano in formato timestamp in millisecondi con fuso orario UTC; questo rappresentava per noi un problema nella rappresentazione temporale degli eventi ad esempio, oppure per quella della sottoscrizione agli eventi da parte degli utenti. Per ovviare a questo inconveniente, e formattare questi metadati in formato date-time condizionati alle rispettive time-zone locali abbiamo sfruttato i metadati riguardanti la localizzazione degli utenti al momento della sottoscrizione agli eventi e, quindi, alla generazione del messaggio RSVP. Partendo quindi da queste informazioni in formato latitudine/longitudine abbiamo innanzitutto localizzato le corrispondenti time-zone attraverso la libreria \textit{timezonefinder} per python e, successivamente, attraverso la libreria \textit{pytz} abbiamo potuto convertire i timestamp in date-time condizionatamente alla time-zone prima definita. Lo sviluppo dei dati è visibile in \textbf{fig.~\ref{datetime_timezoned}}, dove è possibile visualizzare come il dataset si sia trasformato durante i passaggi descritti.
 \begin{figure}
