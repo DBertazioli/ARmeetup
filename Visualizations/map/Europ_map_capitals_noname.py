@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3.6
 # coding: utf-8
 
 # In[1]:
@@ -71,7 +71,7 @@ ddrop.head()
 ddrop[ddrop.g_city=="Stockholm"].reset_index()
 print(len(ddrop))
 ddrop=ddrop[ddrop.count_part>1].reset_index()
-len(ddrop1)
+len(ddrop)
 
 
 # In[16]:
@@ -302,7 +302,6 @@ from folium.features import DivIcon, FeatureGroup
 from folium import IFrame
 
 import base64 #jpeg encoding
-import matplotlib.pyplot as plt
 
 stop=False
 n_stop=300
@@ -442,7 +441,7 @@ plugins.Fullscreen(
 folium.LayerControl().add_to(m)
     
 #Save it as html
-m.save('/home/dario/NeoMeetup/Visualizations/map/export_europe_capitals.html')
+m.save('export_europe_capitals.html')
 print("finished")
 
 
@@ -483,5 +482,5 @@ heat_data = [[row['v_lat'],row['v_lon']] for index, row in lat_df.iterrows()]
 HeatMap(heat_data).add_to(map_hooray)
 
 # Display the map
-map_hooray.save("/home/dario/NeoMeetup/Visualizations/map/heat_try.html")
+map_hooray.save("heat_europe.html")
 
