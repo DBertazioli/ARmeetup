@@ -1,0 +1,251 @@
+subscribed to april meetup topic
+dropping db: meetup2
+creating db: meetup2
+creating graph: MeetupGraph
+creating vertex_coll: Member
+creating vertex_coll: Group
+creating vertex_coll: Topic
+creating vertex_coll: Event
+creating vertex_coll: Venue
+creating edge_definition: MEMBER_OF
+creating edge_definition: HOSTED_EVENT
+creating edge_definition: DEALS_WITH
+creating edge_definition: WILL_PARTICIPATE
+creating edge_definition: HOSTED_AT
+creating edge_definition: WILL_PARTICIPATE
+vertex colls:  ['Event', 'Group', 'Member', 'Topic', 'Venue']
+count is  20000
+committed in 153.70128846168518 s
+count is  40000
+committed in 179.96879768371582 s
+count is  60000
+committed in 210.79956459999084 s
+count is  80000
+committed in 240.3110432624817 s
+count is  100000
+committed in 268.47551131248474 s
+count is  120000
+committed in 297.03674483299255 s
+count is  140000
+committed in 320.11102628707886 s
+count is  160000
+committed in 340.00825214385986 s
+count is  180000
+committed in 373.47132897377014 s
+count is  200000
+committed in 403.45481729507446 s
+count is  220000
+committed in 415.3248393535614 s
+count is  240000
+committed in 476.6297481060028 s
+count is  260000
+committed in 481.0527331829071 s
+count is  280000
+committed in 474.5049297809601 s
+count is  300000
+committed in 508.3059358596802 s
+count is  320000
+committed in 533.2706184387207 s
+count is  340000
+committed in 538.2890002727509 s
+count is  360000
+committed in 560.252099275589 s
+count is  380000
+committed in 530.6611638069153 s
+count is  400000
+committed in 481.0441224575043 s
+count is  420000
+committed in 515.2991180419922 s
+count is  440000
+committed in 514.9913902282715 s
+count is  460000
+committed in 535.9024021625519 s
+count is  480000
+committed in 552.3592538833618 s
+count is  500000
+committed in 621.5700805187225 s
+count is  520000
+committed in 583.8135797977448 s
+count is  540000
+committed in 596.0844113826752 s
+count is  560000
+committed in 608.7474207878113 s
+count is  580000
+committed in 618.3295357227325 s
+count is  600000
+committed in 641.8900246620178 s
+count is  620000
+committed in 658.1869835853577 s
+count is  640000
+committed in 673.3901069164276 s
+count is  660000
+committed in 687.9532430171967 s
+count is  680000
+committed in 694.0142352581024 s
+count is  700000
+committed in 711.7162659168243 s
+count is  720000
+committed in 718.4231798648834 s
+count is  740000
+committed in 734.0727880001068 s
+count is  760000
+committed in 744.2350063323975 s
+count is  780000
+committed in 750.703218460083 s
+count is  800000
+committed in 784.1726546287537 s
+count is  820000
+committed in 781.1187036037445 s
+count is  840000
+committed in 784.9939272403717 s
+count is  860000
+committed in 788.1616778373718 s
+count is  880000
+committed in 741.6803193092346 s
+count is  900000
+committed in 753.6779174804688 s
+count is  920000
+committed in 838.317211151123 s
+count is  940000
+committed in 827.9873642921448 s
+count is  960000
+committed in 840.9896430969238 s
+count is  980000
+committed in 862.754207611084 s
+count is  1000000
+committed in 869.179413318634 s
+count is  1020000
+committed in 901.4126513004303 s
+count is  1040000
+committed in 929.2504568099976 s
+count is  1060000
+committed in 942.6939880847931 s
+count is  1080000
+committed in 962.6277434825897 s
+count is  1100000
+committed in 985.531270980835 s
+count is  1120000
+committed in 986.984391450882 s
+count is  1140000
+committed in 999.5985753536224 s
+count is  1160000
+committed in 995.3287487030029 s
+count is  1180000
+committed in 997.9063746929169 s
+count is  1200000
+committed in 1010.1037445068359 s
+count is  1220000
+committed in 1030.6272826194763 s
+count is  1240000
+committed in 1055.6857960224152 s
+count is  1260000
+committed in 1037.70783162117 s
+count is  1280000
+committed in 1050.9473428726196 s
+count is  1300000
+committed in 1060.2469124794006 s
+count is  1320000
+committed in 1114.128998041153 s
+count is  1340000
+committed in 1134.2572886943817 s
+count is  1360000
+committed in 1105.4676115512848 s
+count is  1380000
+committed in 1126.0580139160156 s
+count is  1400000
+committed in 1133.8463802337646 s
+count is  1420000
+committed in 1136.3496956825256 s
+count is  1440000
+committed in 1135.049513578415 s
+count is  1460000
+committed in 1116.3609726428986 s
+count is  1480000
+committed in 1166.8083975315094 s
+count is  1500000
+committed in 1206.5746359825134 s
+count is  1520000
+committed in 1190.3457467556 s
+count is  1540000
+committed in 1213.9031744003296 s
+count is  1560000
+committed in 1217.475314617157 s
+count is  1580000
+committed in 1208.0932841300964 s
+count is  1600000
+committed in 1239.5146944522858 s
+count is  1620000
+committed in 1244.3119478225708 s
+count is  1640000
+committed in 1239.1831605434418 s
+count is  1660000
+committed in 1302.5649366378784 s
+count is  1680000
+committed in 1317.3488535881042 s
+count is  1700000
+committed in 1485.9014847278595 s
+count is  1720000
+committed in 1561.4050967693329 s
+count is  1740000
+committed in 1516.0526416301727 s
+count is  1760000
+committed in 1534.0402660369873 s
+count is  1780000
+committed in 1561.4145905971527 s
+count is  1800000
+committed in 1509.7951445579529 s
+count is  1820000
+committed in 1467.6513957977295 s
+count is  1840000
+committed in 1516.5142979621887 s
+count is  1860000
+committed in 1534.673376083374 s
+count is  1880000
+committed in 1899.0627644062042 s
+count is  1900000
+committed in 1905.3950142860413 s
+count is  1920000
+committed in 1986.3376705646515 s
+count is  1940000
+committed in 2033.353128194809 s
+count is  1960000
+committed in 1867.736055612564 s
+count is  1980000
+committed in 1858.8522067070007 s
+count is  2000000
+committed in 1955.3812522888184 s
+count is  2020000
+committed in 1904.3514649868011 s
+count is  2040000
+committed in 1993.5163283348083 s
+count is  2060000
+committed in 1981.5633318424225 s
+count is  2080000
+committed in 2025.7849731445312 s
+count is  2100000
+committed in 1937.9028351306915 s
+count is  2120000
+committed in 1979.9875571727753 s
+count is  2140000
+committed in 1850.3571724891663 s
+count is  2160000
+committed in 2018.6092739105225 s
+count is  2180000
+committed in 1900.259706735611 s
+count is  2200000
+committed in 1952.9364478588104 s
+count is  2220000
+committed in 1999.6791024208069 s
+count is  2240000
+committed in 2562.9645392894745 s
+count is  2260000
+committed in 2419.9099175930023 s
+count is  2280000
+committed in 2577.393001794815 s
+count is  2300000
+committed in 2507.215716123581 s
+count is  2320000
+committed in 2496.287663459778 s
+count is  2340000
+committed in 2611.878580570221 s
+reached line 2345236 in 130913.05853652954 s
