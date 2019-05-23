@@ -65,7 +65,7 @@
 %	ARTICLE INFORMATION
 %----------------------------------------------------------------------------------------
 
-\JournalInfo{~}%\includegraphics[scale=0.125]{NeoMeetup}}  
+\JournalInfo{\includegraphics[scale=0.35, trim = 0 6.7cm 1cm 3cm]{logo}}  
 %Journal information
 \Archive{ } % Additional notes (e.g. copyright, DOI, review/research article)
 
@@ -76,7 +76,7 @@ Explore the Meetup Social Network in ArangoDB} % Article title
 \affiliation{\textsuperscript{1}\textit{Data Science, Department of Computer Science, University of Milano Bicocca, Milan, Italy}} % Author affiliation
 \affiliation{*\textbf{Corresponding author}: m.perletti@campus.unimib.it} % Corresponding author
 
-\Keywords{Meetup --- ArangoDB --- SocialNetwork} % Keywords - if you don't want any simply remove all the text between the curly brackets
+\Keywords{AQL --- ArangoDB --- Cypher --- DataManagement --- DataVisualization --- Kafka --- Meetup --- Neo4j --- Nifi --- Python --- R --- SocialNetwork} % Keywords - if you don't want any simply remove all the text between the curly brackets
 \newcommand{\keywordname}{Keywords} % Defines the keywords heading name
 
 %----------------------------------------------------------------------------------------
@@ -240,9 +240,10 @@ Come accennato, con l'API di Kafka per Python abbiamo potuto configurare un cons
 Abbiamo scelto inizialmente di salvare i nostri dati in un database a grafo per via della loro struttura naturale, che ben si presta ad essere schematizzata con nodi principali, proprietà e relazioni che interconnettono tali nodi. Abbiamo provveduto quindi all'import dei dati in Neo4j, sfruttando il linguaggio Cypher e l'ottimizzazione dell'import via csv, dopo aver in un primo momento tentato un approccio tramite l'api Python Py2Neo. Per facilitare un'eventuale serializzazione del processo di import, abbiamo creato uno script (Bash) che, una volta creati i csv, consente di automatizzare le varie chiamate alla cypher-shell, dato che il processo di creazione del database risulta piuttosto laborioso ma facilmente standardizzabile (\href{https://github.com/DBertazioli/NeoMeetup/blob/master/Scripts/import_cypher.sh}{import.sh}).
 Questa soluzione però mal si prestava alla prospettiva di accumulare più dati, anche in vista di un possibile ampliamento degli orizzonti del progetto, dato che Neo4j non permette la distribuzione orizzontale dei propri database ma giova soltanto di una scalabilità di tipo verticale.
 \subsection{ArangoDB}
-Data a questo punto l'esigenza di trovare una soluzione che coniugasse il nostro bisogno di un database a grafo, ma che fosse anche in grado di essere scalabile orizzontalmente e quindi distribuibile con processi interni e non tramite segmentazione dei dati all'origine, anche nell'ottica di voler eventualmente implementare uno streaming continuo dall'RSVP API, abbiamo optato per ArangoDB, un DBMS multi-modello in grado di unire modelli documentale, a grafo e key-value interrogabili con un unico linguaggio di query condiviso (\texttt{AQL}, un misto tra un linguaggio \texttt{SQL-like} e un linguaggio di programmazione). %nota riguardo la distribuzione del modello.
-Sfruttando il particolare concetto di grafo implementato in ArangoDB abbiamo così realizzato una \textit{collection} per ogni vertice ed una \textit{edge-collection} per ogni arco del grafo.
-Il database così realizzato presenta circa 1 milione e mezzo di singoli nodi e circa 28 milioni di relazioni tra questi, con un tempo di import su ArangoDB stimato in circa venti minuti.
+Data a questo punto l'esigenza di trovare una soluzione che coniugasse il nostro bisogno di un database a grafo, ma che fosse anche in grado di essere scalabile orizzontalmente e quindi distribuibile con processi interni e non tramite segmentazione dei dati all'origine, anche nell'ottica di voler eventualmente implementare uno streaming continuo dall'RSVP API, abbiamo optato per ArangoDB, un DBMS multi-modello in grado di unire i modelli documentale, a grafo e key-value, interrogabili con un unico linguaggio di query condiviso (\texttt{AQL}, un misto tra un linguaggio \texttt{SQL-like} e un linguaggio di programmazione). %nota riguardo la distribuzione del modello.
+Sfruttando il particolare concetto di grafo implementato in ArangoDB abbiamo così realizzato una \textit{collection} per ogni vertice ed una \textit{edge-collection} per ogni arco del grafo. Nel caso di una ingestion di dati superiore alla nostra la strategia da adottare, data la natura della piattaforma, potrebbe basarsi sulla specificazione di uno shard per ogni continente e specificare in fase di ingestion, per ogni collection e per ogni istanza il continente di riferimento 
+\footnote{\texttt{db.\_create("sharded\_collection", {"numberOfShards": 5, "shardKeys": ["continent"]})}}, tutto ciò da specificarsi in fase di creazione del DB. Sulla base inoltre della disponibilità è possibile anche creare più cluster, con conseguente possibilità di implementare un ulteriore strategia di frammentazione basata su criteri ulteriori.
+Il database da noi realizzato presenta circa 1 milione e mezzo di singoli nodi e circa 28 milioni di relazioni tra questi, con un tempo di import su ArangoDB stimato in circa venti minuti.
 
 \section{Results}
 \paragraph{Misure quantitative semplici}:
@@ -272,7 +273,7 @@ per rappresentare al meglio queste informazioni. Appare infatti chiaro dalla vis
 \caption{\label{plot_heatmap} Heatmap distribuzione temporale degli eventi}
 \end{figure}
 \paragraph{Utilizzo delle informazioni spaziali}:
-Per esplorare a fondo le informazioni in nostro possesso, abbiamo sfruttato i metadati spaziali presenti nei messaggi per realizzare una visualizzazione interattiva in forma di mappa esplorabile focalizzata sull'Europa...
+Per esplorare a fondo le informazioni in nostro possesso, abbiamo sfruttato i metadati spaziali presenti nei messaggi per realizzare una visualizzazione interattiva in formato di mappa esplorabile focalizzata sull'Europa. Con questa mappa l'utente può potenzialmente esplorare l'offerta di eventi su base spaziale e visualizzarli localizzati nel luogo in cui sono stati organizzati e, cliccandoci sopra, può acquisire informazioni quali le caratteristiche dell'evento. Meetup infatti non fornisce nessun tipo di esplorazione spaziale ai propri utenti, ma permette di visualizzare gli eventi unicamente sulla propria Home in ordine cronologico. Sarebbe invece interessante se potesse implementare una funzionalità di esplorazione spaziale con cui l'utente, data una geolocalizzazione di partenza ed un raggio chilometrico, possa esplorare liberamente gli eventi visualizzati sulla mappa, magari con alcune opzioni di filtro per la visualizzazione, come ad esempio le categorie di topic trattate dai gruppi che organizzano gli eventi, il numero di risposte che gli eventi hanno già ricevuto, il giorno per cui l'evento è stato organizzato ed altro ancora.
 \paragraph{Valutazione efficacia sistema di raccomandazione}:
 Con lo scopo di valutare il sistema di raccomandazione della piattaforma e sfruttando le informazioni a nostra disposizione abbiamo calcolato la Jaccard similarity per ogni utente, prendendo in considerazione i topic comuni tra quelli dichiarati dall'utente in fase di registrazione ed i topic dei gruppi di cui l'utente fa parte come si vede in \textbf{fig.~\ref{jaccard_similarity}}. Questa misurazione ci ha permesso di giungere ad una certa constatazione riguardo la modalità di acquisizione dei dati. La nostra misurazione risulterebbe infatti inficiata dalla raccolta dati tramite streaming poichè noi siamo a conoscenza, per ogni utente, soltanto dei gruppi di cui fa parte condizionatamente al fatto che durante il periodo di streaming egli abbia risposto ad un evento organizzato da questi gruppi, e non della totalità dei gruppi a cui sarebbe iscritto. Questo particolare molto probabilmente contribuisce in maniera significativa alla determinazione di una bassa similarità tra i topic conformi ai gusti dichiarati dagli utenti e la totalità dei topic dichiarati sia dagli utenti che dai gruppi. Va inoltre tenuto conto che sia gli utenti in fase di registrazione che i gruppi al momento della creazione, molto probabilmente, prestano poca attenzione alla quantità e alla sparsità dei topic inseriti nel sistema, condizionando così la nostra misurazione. 
 \begin{figure}
@@ -281,7 +282,6 @@ Con lo scopo di valutare il sistema di raccomandazione della piattaforma e sfrut
 \caption{\label{jaccard_similarity} Jaccard similarity degli utenti riguardo i topic corrispondenti tra quelli dichiarati in fase di registrazione e quelli dei gruppi di cui fanno parte}
 \end{figure}
 %------------------------------------------------
-\phantomsection
 \section*{Interesting Challenges}
 {\small
 Durante la realizzazione del progetto abbiamo dovuto affrontare diverse problematiche legate ai più svariati ambiti, da quello della scalabilità in import dei dati a quello della velocità di processing.

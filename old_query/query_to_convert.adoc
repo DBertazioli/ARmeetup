@@ -72,12 +72,21 @@ return { Numero_eventi, country }
 
 * Massimo numero di partecipanti ad un evento per Paese
 
-[source, cypher]
+[source, aql]
 ----
-match (m:Member)-[r:WILL_PARTECIPATES]->(e:Event)<-[r1:HOSTED_EVENT]-(g:Group)
-with count(m) as part, e, g
-return max(part) as max_part, g.country
-order by max_part desc
+let eventsWithPart = (
+    for m in member
+        for e in 1..1 outbound m will_partecipates
+            collect event_name = e.event_name, event = e._id with count into participants
+            sort participants desc
+            return {"participants": participants, "event_id": event, "name": event_name}
+)
+for event in eventsWithPart
+    for g in 1..1 inbound event.event_id hosted_event
+    collect country = g.group_country
+    aggregate max_part = max(event.participants)
+    sort max_part desc
+    return {country, max_part}
 ----
 
 * Jaccard similarity measure between declared and group topics for every member
