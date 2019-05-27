@@ -103,13 +103,22 @@ order by jac_similarity desc
 ----
 
 * Distance_member_event
-[source, cypher]
+[source, aql]
 ----
-match (m:Member)-[r1:WILL_PARTECIPATES]->(e:Event)<-[r:HOSTED_EVENT]-(g:Group)
-where g.lon <> 'NONE' and g.lat <> 'NONE' and m.lat is not null and m.long is not null and r1.response = 'yes'
-with point({latitude: toFloat(g.lat),longitude:toFloat(g.lon)}) as p1, point({latitude:toFloat(m.lat), longitude:toFloat(m.long)}) as p2, m.id as member_id, e.id as event_id, m.lat as lat_member, m.long as lon_member, g.lat as lat_event, g.lon as lon_event
-return member_id, event_id, lat_member, lon_member, lat_event, lon_event, (max(distance(p1,p2)))/1000 as dist
-order by dist desc
+let memToevent = (
+    for m in member
+        for e, tempE in 1..1 outbound m will_partecipates
+        filter tempE.response == 'yes' && m.lat != null && m.lon != null
+        return { 'member_id':m._id, 'event_id':e._id, 'lat_member':m.lat, 'lon_member':m.lon,
+            'mem_id':m._key,
+            'ev_id':e._key}
+)
+for event in memToevent
+    for g in 1..1 inbound event.event_id hosted_event
+    filter g.lat != 'NONE' && g.lon != 'NONE'
+    let dist = distance(event.lat_member, event.lon_member, g.group_lat, g.group_lon) / 1000
+    sort dist desc
+    return { 'member_id':event.mem_id, 'event_id':event.ev_id, 'member_lat':event.lat_member, 'member_lon':event.lon_member, 'event_lat':g.group_lat, 'event_lon':g.group_lon, 'distance':dist }
 ----
 
 
