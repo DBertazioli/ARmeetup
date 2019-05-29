@@ -1,0 +1,36 @@
+###de###
+"Berlin"	2707
+"M\u00fcnchen"	1049
+"Hamburg"	776
+###it###
+"Milano"	297
+"Roma"	184
+"Torino"	84
+###fr###
+"Paris"	3175
+"Lyon"	567
+"Nantes"	320
+###es###
+"Barcelona"	4087
+"Madrid"	2468
+"Valencia"	433
+###pt###
+"Lisbon"	488
+"Porto"	117
+"Braga"	9
+###nl###
+"Amsterdam"	1465
+"Rotterdam"	348
+"Den Haag"	298
+###se###
+"Stockholm"	664
+"G\u00f6teborg"	135
+"Malm\u00f6"	88
+###fi###
+"Helsinki"	193
+"Turku"	14
+"Tampere"	8
+###gb###
+"London"	10930
+"Manchester"	939
+"Edinburgh"	801
