@@ -26,7 +26,7 @@ Il nostro progetto è consistito nell'acquisire le sottoscrizioni degli utenti a
 Per riassumere gli aspetti più interessanti incontrati durante la nostra esplorazione dei dati abbiamo realizzato alcune visualizzazioni:
 
 <ol>
-  <li> Una visualizzazione statica, sotto forma di [heatmap](https://github.com/DBertazioli/ARmeetup/blob/master/report/images/heatmap_with_barplot_v3.jpg) </li>
+  <li> Una visualizzazione statica, sotto forma di <a href = "https://github.com/DBertazioli/ARmeetup/blob/master/report/images/heatmap_with_barplot_v3.jpg">heatmap</a> </li>
 </ol>
 
 i) Una visualizzazione statica, sotto forma di [heatmap](https://github.com/DBertazioli/ARmeetup/blob/master/report/images/heatmap_with_barplot_v3.jpg) 
