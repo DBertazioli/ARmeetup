@@ -3,6 +3,6 @@
 </p>
 
 <p align="center">
-  <a><img src = "https://github.com/DBertazioli/ARmeetup/blob/master/report/images/logo.png" width = "30%"></a>
+  <a><img src = "https://github.com/DBertazioli/ARmeetup/blob/master/report/images/logo.png" width = "50%"></a>
 </p>
 <h4 align = "center">Analyze Meetup Social Network in ArangoDB</h4> 
