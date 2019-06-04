@@ -107,14 +107,18 @@ Per fare ciò è stata utilizzata la Virtual Machine Azure di Microsoft fornitac
 
 \section*{Introduction}
 {\small %small for text larger
-\textbf{Meetup} è stato creato nel 2002 come piattaforma per mettere in contatto le persone nella vita reale. Fondato e guidato inizialmente da Scott Heiferman e Brendan McGovern, nel 2017 Meetup è stato acquisito da WeWork (ora The We Company). \\
+\textbf{Meetup} è stato creato nel 2002 come piattaforma per mettere in contatto le persone nella vita reale.\\
 Una volta completata la fase di registrazione, gli utenti possono: \\
 \\
-- Selezionare i propri interessi: ciò avviene sottoscrivendo dei topic precompilati dall'applicazione in modo da favorire il sistema di raccomandazione. Questi topic spaziano tra i più svariati ambiti, da quello professionale a quello degli hobby, fino ai più comuni, relativi ad eventi sociali. \\
+- Selezionare i propri interessi: ciò avviene sottoscrivendo dei topic precompilati dall'applicazione in modo da favorire il sistema di raccomandazione. 
+Questi topic spaziano tra i più svariati ambiti, da quello professionale a quello degli hobby, fino ai più comuni, relativi ad eventi sociali. \\
 \\
-- Iscriversi a gruppi locali: una volta selezionati i topic di interesse il sistema di raccomandazione dell'applicazione suggerisce all'utente una serie di gruppi più o meno locali (a seconda dell'area di interesse selezionata dall'utente) che trattano i topic in oggetto o altri topic ad essi correlati. Ciò permette agli utenti di incontrare persone della propria zona che condividono le stesse passioni. Nel caso in cui tra i topic di interesse per l'utente ce ne siano alcuni che non trovano nessun riscontro in gruppi presenti sul territorio, l'applicazione suggerisce all'utente di creare lui stesso un gruppo con oggetto quel topic, consigliando di mettersi in contatto con altre persone che dimostrano quell'interesse, suggerendole attraverso il sistema di raccomandazione.\\
+- Iscriversi a gruppi locali: una volta selezionati i topic di interesse il sistema di raccomandazione dell'applicazione suggerisce all'utente una serie di gruppi più o meno locali (a seconda dell'area di interesse selezionata dall'utente) che trattano i topic in oggetto o altri topic ad essi correlati. 
+Ciò permette agli utenti di incontrare persone della propria zona che condividono le stesse passioni. 
+Nel caso in cui tra i topic di interesse per l'utente ce ne siano alcuni che non trovano nessun riscontro in gruppi presenti sul territorio, l'applicazione suggerisce all'utente di creare lui stesso un gruppo con oggetto quel topic, consigliando di mettersi in contatto con altre persone che dimostrano quell'interesse, suggerendole attraverso il sistema di raccomandazione.\\
 \\
-- Partecipare ad eventi: i gruppi locali, nel corso del tempo, organizzano eventi, incontri, meeting con oggetto i topic dichiarati dai gruppi stessi. Una volta che un gruppo ha organizzato un evento l'utente può visualizzarli sulla propria home e, una volta visionati i dettagli, decidere di comunicare se parteciperà oppure no e, nel caso volesse partecipare, se ha intenzione di portare degli ospiti, il tutto in maniera non vincolante. 
+- Partecipare ad eventi: i gruppi locali, nel corso del tempo, organizzano eventi, incontri, meeting con oggetto i topic dichiarati dai gruppi stessi. 
+Una volta che un gruppo ha organizzato un evento l'utente può visualizzarli sulla propria home e, una volta visionati i dettagli, decidere di comunicare se parteciperà oppure no e, nel caso volesse partecipare, se ha intenzione di portare degli ospiti, il tutto in maniera non vincolante. 
 Inoltre, per non restringere troppo la sfera di interessi degli utenti, l'applicazione permette anche di selezionare diversi filtri per la home, tra cui uno apposito per visualizzare eventi organizzati da gruppi di cui non si fa parte o un filtro ad hoc per visualizzare gruppi di cui l'utente non è già membro e che magari non trattano topic per cui l'utente ha dichiarato interesse, ma che essendo pur sempre gruppi locali, potrebbe gradire o trovare interessanti.\\
 \\
 Il focus centrale dell'intero meccanismo dell'applicazione risulta quindi essere quello del "gruppo" visto come realtà associativa e fautore di momenti di aggregazione durante l'intero anno, molto spesso non guidati da una ristretta cerchia di capi ma, anzi, promotore di iniziative da parte dei suoi stessi membri. 
@@ -124,8 +128,7 @@ La varietà di gruppi, a seconda dei topic trattati, spazia tra:
 \item Gruppi professionali, che si pongono l'obiettivo di mettere in contatto persone e professionisti di svariati campi attraverso workshop o presentazioni con il fine di fare crescere gli utenti dal punto di vista professionale.
 \item Gruppi creativi, ovvero gruppi di progettazione e più vocati ad hobby ed alla pratica delle più svariate arti. \\
 \end{enumerate}
-Sintetizzando, quindi, la missione di Meetup è aiutare le persone a crescere e raggiungere i loro obiettivi attraverso connessioni autentiche e reali. 
-Dal network professionale alla birra artigianale passando per workshop di programmazione, le persone usano Meetup per uscire dalla loro comfort zone, incontrare nuove persone, imparare cose nuove, perseguire le loro passioni e trovare sostegno in comunità che le aiutano a crescere.\\
+Sintetizzando, quindi, la missione di Meetup è aiutare le persone a crescere e raggiungere i loro obiettivi attraverso connessioni autentiche e reali. \\
 Ad oggi, Meetup è disponibile in 186 Paesi, e conta più di 40 milioni di membri sulla piattaforma, con più di 320 mila gruppi attivi ed una media di 12 mila eventi al giorno.
 }
 %------------------------------------------------
@@ -134,7 +137,7 @@ Ad oggi, Meetup è disponibile in 186 Paesi, e conta più di 40 milioni di membr
 {\small
 Con l'analisi della rete sociale di Meetup e andando a studiare le relazioni che interconnettono le persone attraverso eventi sociali organizzati dai diversi gruppi presenti in tutto il globo, è possibile avere una mappatura più o meno dettagliata degli interessi comuni che portano ad agglomerare un significativo numero di soggetti instaurando relazioni tra di essi. \\
 \\
-Cercando di ricreare questa rete ci siamo posti alcuni obiettivi, considerando anche i limiti dovuti all'acquisizione dati, ovvero quella avvenuta in forma streaming:
+Cercando di ricreare questa rete ci si è posti alcuni obiettivi, considerando anche i limiti dovuti all'acquisizione dati, ovvero quella avvenuta in forma streaming:
 \begin{itemize}
 \item Effettuare misure quantitative semplici per verificare, banalmente, quali siano i paesi in cui la piattaforma è più utilizzata ed affermata;
 \item Sfruttando le informazioni temporali, verificare quale sia il momento migliore della settimana e della giornata in cui organizzare un meetup per poter attrarre più persone possibili, considerando che la piattaforma è per lo più utilizzata per incontri di carattere professionale;
@@ -151,10 +154,10 @@ L'intera strutturazione del progetto si pone come obiettivi didattici, oltre a q
 \begin{enumerate}
 \item \textbf{V}elocity: attraverso l'applicazione di raccolta dei dati provenienti da una fonte streaming, con tutte le problematiche a questa connessa, come connessione e immagazzinamento dei dati real time.
 \item \textbf{V}olume: la raccolta dei dati ha prodotto un quantitativo di notevole importanza, comportando la costruzione di un DB di dimensione superiore ai 2 GB. Ciò ha comportato la necessità di applicare tecniche e tool adeguati a compiere task su grandi moli di dati in tempi accettabili.
-%\item \textbf{V}ariety: la raccolta dei dati non si è infatti limitata all'immagazzinamento tramite streaming, ma è stata applicata anche attraverso interrogazione a REST api necessitando, quindi, anche un lavoro a posteriori di riconduzione delle diverse fonti dei dati a formato comune con successivo instance matching, reso possibile dalla presenza di identificatori univoci presenti per ogni entità. 
 \end{enumerate}
 \subsection{Source}%WebSocket (RSVP) Rest API
-Meetup, come già detto, mette a disposizione parte dei dati in suo possesso relativi a membri iscritti alla piattaforma, gruppi creati ed eventi organizzati nella stessa. In particolare, i dati sono forniti in due modalità: 
+Meetup, come già detto, mette a disposizione parte dei dati in suo possesso relativi a membri iscritti alla piattaforma, gruppi creati ed eventi organizzati nella stessa. 
+In particolare, i dati sono forniti in due modalità: 
 
 \paragraph{streaming data:} 
 la piattaforma condivide dati in streaming, composti essenzialmente da \textbf{RSVP}.
@@ -204,7 +207,7 @@ Un esempio di dato di questo genere è riportato sotto allo scopo di mostrarne l
     \item venue\_name
 	\end{itemize}    
 \end{itemize}
-Abbiamo proceduto ad estrarre tali dati da websocket, sfruttando Nifi (vedasi prossimo paragrafo).
+Si è proceduto ad estrarre tali dati da websocket, sfruttando Nifi (vedasi prossimo paragrafo).
 \paragraph{rest API:} Meetup permette anche un accesso piuttosto flessibile al database, esponendo tramite rest API informazioni riguardo a membri, gruppi ed eventi in formato JSON\footnote{Si veda \url{https://secure.meetup.com/meetup_api} per una lista dei metodi disponibli.}. Abbiamo sfruttato questa possibilità per arricchire i dati acquisiti in streaming. In particolare, abbiamo proceduto all'enrichment delle informazioni sui membri, integrando per ciascun utente:
 \begin{itemize}[noitemsep]
 \item la localizzazione spaziale, ovvero le coordinate geografiche (lat/lon) dichiarate in fase di registrazione così che il sistema di raccomandazione dell'applicazione possa suggerire gruppi su base geografica.
@@ -293,7 +296,7 @@ Va inoltre tenuto conto che sia gli utenti in fase di registrazione che i gruppi
 \caption{\label{jaccard_similarity} Jaccard similarity degli utenti riguardo i topic corrispondenti tra quelli dichiarati in fase di registrazione e quelli dei gruppi di cui fanno parte}
 \end{figure}
 %------------------------------------------------
-\section*{Interesting Challenges}
+\section{Interesting Challenges}
 {\small
 Durante la realizzazione del progetto abbiamo dovuto affrontare diverse problematiche legate ai più svariati ambiti, da quello della scalabilità in import dei dati a quello della velocità di processing, fino all'implementazione di una vera e propria costruzione continua del database con processo live streaming.
 \paragraph{Symbolic Links}: Avendo effettuato lo streaming utilizzando una sola Virtual Machine (VM), per poter trasferire i dati anche sulle altre macchine abbiamo provveduto a creare parallelamente all'ingestion diretta in Kafka anche un backup direttamente nella macchina. Ciò ci ha permesso di trasferire direttamente questo backup dalla macchina principale alle altre. Successivamente nelle nuove VM si rendeva quindi necessario implementare un ingestion dalla VM a Kafka per mezzo di un workflow Nifi, così da emulare la stessa procedura dello streaming. Per ovviare poi ad un bug/limite dei nodi \textit{getFile/FetchFile} di Nifi, che si verifica nel tentativo di eseguire un ingestion di elevata quantità di file in una sola volta, abbiamo escogitato una soluzione creando dei link simbolici, dividendo la creazione in sottocartelle, facendo così leggere al nodo \textit{GetFile} questi link e impostando il nodo in modo che venisse eliminato il link dopo la singola lettura/ingestion. Ciò ci ha permesso di conservare i dati originali ed impedire che i nodi di import li eliminassero, facendoci risparmiare tempo per quanto riguarda la creazione dei database di backup sulle diverse VM.
@@ -324,13 +327,19 @@ Anche la scelta di un database a grafo, e nello specifico di Neo4j in principio,
 Infine le scelte operate in fatto di processing dei dati con i dizionari per l'estrazione delle singole entità prima, e con l'applicativo Arangoimp per l'import su ArangoDB dopo, si sono dimostrate essere vincenti per quello che è stato il vero e proprio streaming effettuato a febbraio 2019.
 Quest'ultimo infatti contava più di 2 milioni e mezzo di messaggi, con una dimensionalità finale del database di 1 milione e mezzo di singoli nodi e circa 28 milioni di relazioni tra questi.
 \paragraph{Conversione dei metadati temporali}: Durante la fase di analisi dei dati con l'obiettivo di realizzare statistiche e visualizzazioni, ci siamo imbattuti nel problema della formattazione dei metadati temporali. Nello specifico tutti i metadati temporali provenienti dall'API di Meetup si presentano in formato timestamp in millisecondi con fuso orario UTC; questo rappresentava per noi un problema nella rappresentazione temporale degli eventi ad esempio, oppure per quella della sottoscrizione agli eventi da parte degli utenti. Per ovviare a questo inconveniente, e formattare questi metadati in formato date-time condizionati alle rispettive time-zone locali abbiamo sfruttato i metadati riguardanti la localizzazione degli utenti al momento della sottoscrizione agli eventi e, quindi, alla generazione del messaggio RSVP. Partendo quindi da queste informazioni in formato latitudine/longitudine abbiamo innanzitutto localizzato le corrispondenti time-zone attraverso la libreria \textit{timezonefinder} per python e, successivamente, attraverso la libreria \textit{pytz} abbiamo potuto convertire i timestamp in date-time condizionatamente alla time-zone prima definita. Lo sviluppo dei dati è visibile in \textbf{fig.~\ref{datetime_timezoned}}, dove è possibile visualizzare come il dataset si sia trasformato durante i passaggi descritti.
-\paragraph{Implementazione update database in live streaming}
-%darito, a te l'onore
 \begin{figure}
 \centering
 \includegraphics[width = 9 cm, height = 3.5 cm]{datetime_timezoned.PNG}
 \caption{\label{datetime_timezoned} Passaggi conversione timestamp into datetime timezoned}
 \end{figure}
+\paragraph{Implementazione ingestion in database live streaming}
+Con l'obiettivo di implementare il meccanismo di ingestion continuo nel DB, sulla base di uno streaming no-stop, si è implementata una pipeline che, a partire dal consumer Kafka, acquisisce i messaggi, li elabora con lo stesso meccanismo utilizzato per creare i csv e, sfruttando \textit{python-arango}, un api di interfaccia tra python e ArangoDB, effettua l'ingestion nel database, preservandone la consistenza effettuando un check per evitare di inserire duplicati. 
+Per questa fase di ingestion previste due possibili strategie:
+\begin{itemize}[noitemsep]
+\item Un ingestion continua, per cui ogni messaggio viene inserito nel DB in seguito al check della consistenza;
+\item Un ingestion per fasi, la quale consiste nel creare dei batch db tramite l'api, per cui si raccolgono un determinato numero di messaggi e si effettua un caricamento più consistente.
+\end{itemize}
+Per testare la tenuta della pipeline abbiamo effettuato l'ingestion di tutti i circa 2 milioni di messaggi precedentemente archiviati in Kafka, verificando quindi la resistenza ad un grande carico: tipicamente infatti la frequenza dei messaggi oscilla tra i 100 ed i 300 messaggi al secondo, ben al di sotto delle frequenze testate, ovvero tra 1000 e 10000 messaggi al secondo.
 }
 \section*{Acknowledgments} % The \section*{} command stops section numbering
 
