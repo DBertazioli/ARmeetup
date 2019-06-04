@@ -67,3 +67,8 @@ Come conclusione del nostro progetto e della nostra esplorazione abbiamo redatto
   <a href = "https://www.linkedin.com/in/massimilianoperletti/"><img src="https://github.com/malborroni/Machine_Learning_Project/blob/master/img/174857.svg" width = "3%"></a>
   <a href = "https://github.com/maxi93/"><img src="https://github.com/malborroni/Foundations_of_Computer-Science/blob/master/images/GitHub.png" width = "3%"></a>
   
+<p align = "right">
+  <a href = "https://github.com/malborroni/">
+             <img src = "https://github.com/DBertazioli/ARmeetup/blob/master/report/images/credits_readme.png" width = "25%">
+             </a>
+</p>
