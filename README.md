@@ -27,6 +27,11 @@ Per riassumere gli aspetti più interessanti incontrati durante la nostra esplor
 
 <ol>
   <li> Una visualizzazione statica, sotto forma di <a href = "https://github.com/DBertazioli/ARmeetup/blob/master/report/images/heatmap_with_barplot_v3.jpg">heatmap</a> </li>
+  <li> Una visualizzazione dinamica, realizzata sotto forma di mappa interattiva, divisa in due parti 
+    <ul>
+      <li>Una parte in cui sono rappresentati i topic principali trattati dagli eventi tenutisi nei diversi Paesi europei <a href = "https://dbertazioli.github.io/Interact/Interact_heatmap_european_capitals.html">Viz</a></li>
+      <li>Una parte in cui sono rappresentati gli eventi per ogni Paese europeo</li>
+    </ul>
+  </li>
 </ol>
 
-i) Una visualizzazione statica, sotto forma di [heatmap](https://github.com/DBertazioli/ARmeetup/blob/master/report/images/heatmap_with_barplot_v3.jpg) 
