@@ -7,7 +7,7 @@ library(tibble)
 library(dplyr)
 library(tidyr)
 library(ggthemes) # <-- guardati i temi che ci sono qui che magari ne trovi che ti piacciono
-
+#library(plotly)
 
 
 # import data -------------------------------------------------------------
@@ -44,7 +44,7 @@ new_data <- new_data/n # frequenze relative
 new_data
 
 reshaped <- gather(new_data, "question", "answer") # reshape con pacchetto tidyr
-reshaped$mod <- c("1-3","4-6","1-3","4-6","1-3","4-6","1-3","4-6","1-3","4-6","1-3","4-6")
+reshaped$value.answer <- c("1-3","4-6","1-3","4-6","1-3","4-6","1-3","4-6","1-3","4-6","1-3","4-6")
 # reshaped$answer + (1.96*sqrt((1-reshaped$answer)/n))
 
 reshaped$up <- reshaped$answer + (1.96*sqrt((1-reshaped$answer)/n)) # definisco conf int
@@ -52,28 +52,44 @@ reshaped$low <- reshaped$answer - (1.96*sqrt((1-reshaped$answer)/n))
 reshaped_error <- reshaped[c(2,4,6,8,10,12),] # prendo solo valori per p non per 1-p
 reshaped_error
 
+png("stacked_bar_viz1.png", width = 15, height = 8, units = 'in', res = 800)
+
 ggplot(reshaped,
-       aes(fill = mod,
+       aes(fill = value.answer,
            y = answer,
            x = question)) + 
   geom_bar(stat = "identity",
            position = "fill",
-           width = 0.95) +
+           width = 0.95,
+           alpha = 0.75,
+           colour = 'white') +
   geom_errorbar(data = reshaped_error,
                 aes(x = question,
                     ymax = up,
-                    ymin = low),
+                    ymin = low,
+                    alpha = 0.65),
+                show.legend = F,
                 width = .15) +
+  
   geom_hline(yintercept = 0.50, linetype = "dashed", color = "white", size = 0.5) +
+  scale_x_discrete(limits = c('Valore.complessivo', 'Bella', 'Informativa', 'Chiara', 'Intuitiva', 'Utile')) +
+  scale_y_continuous(labels = c('0 %', '25 %', '50 %', '75 %','100 %'),
+                     sec.axis = sec_axis(~.*1, labels = c('100 %', '75 %', '50 %', '25 %','0 %'))) +
   coord_flip() +
-  geom_text(aes(label = format(round(reshaped$answer*100, 1))), position = position_stack(vjust = 0.5), size = 3, color = 'white') +
-  theme_classic(base_size = 12, base_family = "Helvetica") + # versione base, poi puoi arricchirlo come ti piace
+  scale_fill_manual(values = c("#ffad33","#80ccff")) +
+  geom_text(aes(label = paste0(format(round(reshaped$answer*100, 1)), ' %'),
+                fontface = 'bold', vjust = 1.75), position = position_stack(vjust = 0.2),
+            size = 4, color = 'white') +
+  theme_fivethirtyeight(base_size = 12, base_family = "Helvetica") + # versione base, poi puoi arricchirlo come ti piace
   theme(axis.text.x=element_text(size=10)) +
   theme(axis.title.y=element_text(size=14, face="bold", vjust=1)) +
   theme(axis.title.x=element_text(size=14, face="bold", vjust=1)) +
-  theme(axis.text.y=element_text(hjust=1,vjust=1, size=10))
-  #theme(legend.position="right")
+  theme(axis.text.y=element_text(size=10)) 
+  # theme(legend.position="right", legend.box = TRUE)
 
+#ggplotly(p)
+
+dev.off()
 
 # da qui riprende tuo script ----------------------------------------------
 # df_stack <- t(df_stack)
