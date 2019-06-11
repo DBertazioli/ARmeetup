@@ -88,7 +88,8 @@ ggplot(reshaped,
   theme(axis.text.x.top=element_text(size=10, color = '#80ccff', face = 'bold')) +
   theme(axis.title.y=element_text(size=14, face="bold", vjust=1)) +
   theme(axis.title.x=element_text(size=14, face="bold", vjust=1)) +
-  theme(axis.text.y=element_text(size=10)) 
+  theme(axis.text.y=element_text(size=10)) +
+  theme(legend.title = element_blank())
   # theme(legend.position="right", legend.box = TRUE)
 #ggplotly(p)
 dev.off()
@@ -133,7 +134,8 @@ ggplot(reshaped,
   theme(axis.text.x.top=element_text(size=10, color = '#80ccff', face = 'bold')) +
   theme(axis.title.y=element_text(size=14, face="bold", vjust=1)) +
   theme(axis.title.x=element_text(size=14, face="bold", vjust=1)) +
-  theme(axis.text.y=element_text(size=10)) 
+  theme(axis.text.y=element_text(size=10)) +
+  theme(legend.title = element_blank())
 # theme(legend.position="right", legend.box = TRUE)
 #ggplotly(p)
 dev.off()
