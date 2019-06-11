@@ -1,22 +1,45 @@
+#install.packages('corrplot')
 library(corrplot)
 
-#df <- read.csv('Questionario psicometrico (VIZ_1).csv')
-df <- read.table('https://raw.githubusercontent.com/DBertazioli/ARmeetup/master/Visualizations/survey/Questionario%20psicometrico%20(VIZ_1).txt', header = TRUE, sep = ",")
-df_corr <- df[,-1]
-df_corr <- df_corr[, -7]
+
+# load data ---------------------------------------------------------------
+#viz 1
+df <- read.table('https://raw.githubusercontent.com/DBertazioli/ARmeetup/master/Visualizations/survey/Questionario%20psicometrico%20(VIZ_1).txt',
+                 header = TRUE, sep = ",")
+
+#viz 2
+df <- read.table('https://raw.githubusercontent.com/DBertazioli/ARmeetup/master/Visualizations/survey/Questionario%20psicometrico%20(VIZ_2).txt',
+                 header = TRUE, sep = ",")
+
+df_corr <- df[,c(-1,-8)]
+
+
+
+# create corr -------------------------------------------------------------
 
 mcor <- cor(df_corr, method = 'pearson')
 
-#install.packages('corrplot')
+
+
+# viz 1 -------------------------------------------------------------------
 
 #change resolution
 png("corr_plot_viz1.png", width = 10, height = 10, units = 'in', res = 800)
-
-
 corrplot(mcor, method = 'circle',
-         type = 'upper', order = 'hclust', tl.col = 'black',
+         type = 'upper', order = 'original', tl.col = 'black',
          tl.srt = 45, tl.cex = 0.7, addCoef.col  = 'black', number.cex = 0.85,
-         cl.lim=c(0,1), col=colorRampPalette(c("blue","white","red"))(200))
-
+         cl.lim=c(-1,1), col=colorRampPalette(c("blue","white","red"))(200))
 dev.off()
+
+
+# viz 2 -------------------------------------------------------------------
+
+#change resolution
+png("corr_plot_viz2.png", width = 10, height = 10, units = 'in', res = 800)
+corrplot(mcor, method = 'circle',
+         type = 'upper', order = 'original', tl.col = 'black',
+         tl.srt = 45, tl.cex = 0.7, addCoef.col  = 'black', number.cex = 0.85,
+         cl.lim=c(-1,1), col=colorRampPalette(c("blue","white","red"))(200))
+dev.off()
+
 
