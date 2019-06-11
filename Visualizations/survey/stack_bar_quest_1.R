@@ -53,7 +53,7 @@ reshaped_error <- reshaped[c(2,4,6,8,10,12),] # prendo solo valori per p non per
 
 
 # viz 1 -------------------------------------------------------------------
-png("stacked_bar_viz1.png", width = 15, height = 8, units = 'in', res = 800)
+png("stacked_bar_viz1.png", width = 15, height = 8, units = 'in', res = 300)
 ggplot(reshaped,
        aes(fill = value.answer,
            y = answer,
@@ -99,7 +99,7 @@ dev.off()
 reshaped_error$up <- ifelse(reshaped_error$up > 1, 1, reshaped_error$up)
 
 
-png("stacked_bar_viz2.png", width = 15, height = 8, units = 'in', res = 800)
+png("stacked_bar_viz2.png", width = 15, height = 8, units = 'in', res = 300)
 ggplot(reshaped,
        aes(fill = value.answer,
            y = answer,
@@ -117,7 +117,7 @@ ggplot(reshaped,
                 show.legend = F,
                 width = .15) +
   
-  geom_hline(yintercept = 0.50, linetype = "dashed", color = "white", size = 0.5) +
+  geom_hline(yintercept = 0.50, linetype = "dashed", color = "white", size = 0.75) +
   scale_x_discrete(limits = c('Valore.complessivo', 'Bella', 'Informativa', 'Chiara', 'Intuitiva', 'Utile')) +
   scale_y_continuous(labels = c('0 %', '25 %', '50 %', '75 %','100 %'),
                      sec.axis = sec_axis(~.*1,
@@ -128,13 +128,13 @@ ggplot(reshaped,
   scale_fill_manual(values = c("#80ccff","#ffad33")) +
   geom_text(aes(label = paste0(format(round(reshaped$answer*100, 1)), '%'),
                 fontface = 'bold', vjust = 1.75), position = position_stack(vjust = 0.48),
-            size = 4, color = 'white') +
-  theme_classic(base_size = 12, base_family = "Helvetica") + # versione base, poi puoi arricchirlo come ti piace
-  theme(axis.text.x.bottom=element_text(size=10, color = '#ffad33', face = 'bold')) +
-  theme(axis.text.x.top=element_text(size=10, color = '#80ccff', face = 'bold')) +
-  theme(axis.title.y=element_text(size=14, face="bold", vjust=1)) +
-  theme(axis.title.x=element_text(size=14, face="bold", vjust=1)) +
-  theme(axis.text.y=element_text(size=10)) +
+            size = 6, color = 'white') +
+  theme_classic(base_size = 14, base_family = "Helvetica") + # versione base, poi puoi arricchirlo come ti piace
+  theme(axis.text.x.bottom=element_text(size=12, color = '#ffad33', face = 'bold')) +
+  theme(axis.text.x.top=element_text(size=12, color = '#80ccff', face = 'bold')) +
+  theme(axis.title.y=element_text(size=16, face="bold", vjust=1)) +
+  theme(axis.title.x=element_text(size=16, face="bold", vjust=1)) +
+  theme(axis.text.y=element_text(size=12)) +
   theme(legend.title = element_blank())
 # theme(legend.position="right", legend.box = TRUE)
 #ggplotly(p)
