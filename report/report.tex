@@ -85,7 +85,7 @@ Explore the Meetup Social Network in ArangoDB} % Article title
 
 \Abstract{Meetup è una piattaforma che nasce con lo scopo di mettere in contatto le persone nella vita reale. 
 Dopo la registrazione un utente può selezionare i propri interessi, iscriversi a gruppi locali e partecipare ad eventi. 
-In questo elaborato si cerca di rispondere a diverse domande di ricerca tra le quali verificare, sfruttando misure qualitative, quale sia il giorno migliore della settimana e l'orario giornaliero più consono in cui organizzare un evento che riscuota successo, individuare l'area geografica approssimativa all'interno della quale un evento attrae utenti della piattaforma, o cercare di valutare l'efficacia del sistema di raccomandazione dell'applicazione. Questo lavoro è stato possibile grazie ai dati condivisi da Meetup tramite streaming RSVP. Da un punto di vista hardare è stata utilizzata la Virtual Machine Azure di Microsoft messa a disposizione dall'Università, mentre a livello di pipeline è stato sfruttato il software Nifi per effettuare lo streaming dei messaggi RSVP, Kafka per lo storage temporaneo e ArangoDB come database finale distribuito per poter effettuare le interrogazioni necessarie a rispondere alle domande di ricerca, permettendo inoltre di gestire in modo funzionale il grande volume di dati acquisito, con la possibilità di poter ulteriormente incrementarne il quantitativo grazie alla forte scalabilità orizzontale garantita dal database.}
+In questo elaborato si cerca di rispondere a diverse domande di ricerca tra le quali verificare, sfruttando misure qualitative, quale sia il giorno migliore della settimana e l'orario giornaliero più consono in cui organizzare un evento che riscuota successo, individuare l'area geografica approssimativa all'interno della quale un evento attrae utenti della piattaforma, o cercare di valutare l'efficacia del sistema di raccomandazione dell'applicazione. Questo lavoro è stato possibile grazie ai dati condivisi da Meetup tramite streaming RSVP. Da un punto di vista hardware è stata utilizzata la Virtual Machine Azure di Microsoft messa a disposizione dall'Università, mentre a livello di pipeline è stato sfruttato il software Nifi per effettuare lo streaming dei messaggi RSVP, Kafka per lo storage temporaneo e ArangoDB come database finale distribuito per poter effettuare le interrogazioni necessarie a rispondere alle domande di ricerca, permettendo inoltre di gestire in modo funzionale il grande volume di dati acquisito, con la possibilità di poter ulteriormente incrementarne il quantitativo grazie alla forte scalabilità orizzontale garantita dal database.}
 
 %----------------------------------------------------------------------------------------
 
@@ -146,15 +146,15 @@ Cercando di indagare le caratteristiche di questa rete, pur tenendo in considera
 L'obiettivo del progetto, in sintesi, è quello di identificare correlazioni o tracce significative che possano determinare delle buone regole nella creazione di eventi di notevole impatto sociale; una piccola guida "\textbf{How to}" che illustri come debba  essere organizzato un meetup di successo.
 }
 %------------------------------------------------
-\section{Implementazione: Architettura}
+\section{Implementazione: architettura}
 {\small %FIXME: IMPORTANT: da aggiungere caratteristiche quali tolerance failure et similia un po' ovunque
-\subsection{Temi Trattati}
+\subsection{Temi trattati}
 L'intera infrastruttura del progetto si pone come obiettivi didattici, oltre a quelli pratici già esposti, di affrontare due delle tre \textbf{V} caratteristiche dei \textit{Big Data}:
 \begin{enumerate}
 \item \textbf{V}elocity: attraverso l'applicazione di raccolta dei dati provenienti da una fonte streaming, con tutte le problematiche a questa connessa, come stabilità e durata della connessione e immagazzinamento dei dati in real time.
 \item \textbf{V}olume: la raccolta dei dati ha prodotto un quantitativo di notevole importanza, comportando la costruzione di un DB di dimensione superiore ai 2 GB. Ciò ha comportato la necessità di applicare tecniche e tool adeguati a compiere task su grandi moli di dati in tempi accettabili.
 \end{enumerate}
-\subsection{Data Source}%WebSocket (RSVP) Rest API
+\subsection{Data source}%WebSocket (RSVP) Rest API
 Meetup, come già detto, mette a disposizione parte dei dati in suo possesso relativi a membri iscritti alla piattaforma, gruppi creati ed eventi organizzati nella stessa. 
 In particolare, i dati sono esposti in due modalità: 
 
@@ -215,7 +215,7 @@ Meetup RSVP:
 \hrule
 \vspace*{0.2cm}
 Si è proceduto ad estrarre tali dati da websocket, sfruttando Nifi (vedasi prossimo paragrafo).
-\paragraph{rest API:} Meetup permette anche un accesso piuttosto flessibile ad ulteriori informazioni, esponendo tramite rest API dati riguardo a membri, gruppi ed eventi in formato JSON\footnote{Si veda \url{https://secure.meetup.com/meetup_api} per una lista dei metodi disponibli.}.
+\paragraph{rest API:} Meetup permette anche un accesso piuttosto flessibile ad ulteriori informazioni, esponendo tramite rest API dati riguardo a membri, gruppi ed eventi in formato JSON\footnote{Si veda \url{https://secure.meetup.com/meetup_api} per una lista dei metodi disponibili.}.
 Abbiamo sfruttato questa possibilità per arricchire i dati acquisiti in streaming. 
 In particolare, si è proceduto all'\textbf{enrichment} delle informazioni sui membri, integrando per ciascun utente:
 \begin{itemize}[noitemsep]
@@ -223,7 +223,7 @@ In particolare, si è proceduto all'\textbf{enrichment} delle informazioni sui m
 \item i topic per cui l'utente ha dichiarato di avere interesse al momento dell'iscrizione alla piattaforma, anche in questo caso per un permettere il buon funzionamento del sistema di raccomandazione.
 \end{itemize}
 L'integrazione è avvenuta tramite http(s) request (a \url{https://api.meetup.com/2/members}) via python script, chiedendo alla rest api di restituire informazioni in base all'ID dello specifico membro, iterando quindi su tutti gli utenti.
-Per ovviare al numero, piuttosto limitato, di richieste al minuto si è deciso di implementare un sistema a più chiavi, facendo un tuning della frequenza di richiesta in modo tale che risultasse appena al di sotto della soglia massima tollerata\footnote{Al di sopra della quale il client viene prima timeouttato e poi bannato per ragioni di sicurezza e performance del servizio}.
+Per ovviare al numero, piuttosto limitato, di richieste al minuto si è deciso di implementare un sistema a più chiavi, facendo un tuning della frequenza di richiesta in modo tale che risultasse appena al di sotto della soglia massima tollerata\footnote{Al di sopra della quale il client viene prima temporaneamente sospeso e poi bannato per ragioni di sicurezza e performance del servizio}.
 Dunque, dopo aver partizionato in modo opportuno la lista di utenti in nostro possesso, si è proceduto all'enrichment con richieste parallele. 
 Inoltre, si è preventivamente stimato il tempo totale necessario all'enrichment per tutti i (più di $800000$) membri con tre richieste parallele, controllando che fosse tollerabile.
 \subsection{Nifi}% Producer and blabla
@@ -254,7 +254,7 @@ Viene quindi inizialmente effettuato l'import dei dati in Neo4j, sfruttando il l
 Per facilitare un'eventuale serializzazione del processo di import, è stato creato uno script (Bash) che, una volta creati i csv, consente di automatizzare le varie chiamate alla cypher-shell, dato che il processo di creazione del database risulta piuttosto laborioso ma facilmente standardizzabile (\href{https://github.com/DBertazioli/NeoMeetup/blob/master/Scripts/import_cypher.sh}{import.sh}).
 Questa soluzione però mal si prestava alla prospettiva di accumulare una grande mole di dati, anche in vista di un possibile ampliamento degli orizzonti del progetto, dato che Neo4j non permette la distribuzione orizzontale dei propri database ma giova soltanto di una scalabilità di tipo verticale. Per questo si è quindi deciso di avvalersi di un altro software.
 \subsection{ArangoDB}
-Data a questo punto l'esigenza di trovare una soluzione che coniugasse il bisogno di un database a grafo, ma che fosse anche in grado di essere scalabile orizzontalmente e quindi distribuibile in maniera trasparente all'utente (con processi e meccanismi interni al database) e non tramite segmentazione manuale dei dati all'origine, anche nell'ottica di voler eventualmente implementare uno streaming continuo dall'RSVP API, si è optato per ArangoDB, un DBMS multi-modello in grado di unire i modelli documentale, a grafo e key-value, interrogabili con un unico e potente linguaggio di query condiviso (\texttt{AQL}, un misto tra un linguaggio \texttt{SQL-like} e un linguaggio di programmazione).
+Data a questo punto l'esigenza di trovare una soluzione che coniugasse il bisogno di un database a grafo, ma che fosse anche in grado di essere scalabile orizzontalmente e quindi distribuibile in maniera trasparente all'utente (con processi e meccanismi interni al database) e non tramite segmentazione manuale dei dati all'origine, anche nell'ottica di voler eventualmente implementare uno streaming continuo dal RSVP API, si è optato per ArangoDB, un DBMS multi-modello in grado di unire i modelli documentale, a grafo e key-value, interrogabili con un unico e potente linguaggio di query condiviso (\texttt{AQL}, un misto tra un linguaggio \texttt{SQL-like} e un linguaggio di programmazione).
 Sfruttando il particolare concetto di grafo implementato in ArangoDB è stata così realizzata una \textit{collection} per ogni vertice ed una \textit{edge-collection} per ogni arco del grafo. 
 Nel caso di una ingestion di dati di notevole portata (e dimensione) la strategia di sharding da adottare, data la natura del software, può quindi basarsi sulla creazione di uno shard per ogni continente e specificare in fase di ingestion, per ogni collection e per ogni istanza il continente di riferimento \footnote{specificando in fase di creazione del database una strategia di sharding del tipo: \texttt{db.\_create("sharded\_collection", {"numberOfShards": 5, "shardKeys": ["continent"]})}}. 
 Sulla base inoltre della disponibilità hardware è possibile creare più clusters, con conseguente possibilità di implementare una ulteriore strategia di frammentazione basata su specifici criteri.
@@ -300,7 +300,7 @@ Per limiti computazionali, inoltre, è stata effettuata una selezione a priori d
 \paragraph{Valutazione efficacia sistema di raccomandazione}:
 Con lo scopo di valutare il sistema di raccomandazione della piattaforma e sfruttando le informazioni a disposizione si è calcolata la Jaccard similarity per ogni utente, prendendo in considerazione i topic comuni tra quelli dichiarati dall'utente in fase di registrazione ed i topic dei gruppi di cui l'utente fa parte, come si vede in \textbf{fig.~\ref{jaccard_similarity}}. 
 Questa misurazione ci ha permesso di giungere ad una certa constatazione riguardo la modalità di acquisizione dei dati. 
-La misurazione risulterebbe viziata dalla raccolta dati tramite streaming poichè si è a conoscenza, per ogni utente, soltanto dei gruppi di cui fa parte condizionatamente al fatto che durante il periodo di streaming egli abbia risposto ad un evento organizzato da questi gruppi, e non della totalità dei gruppi a cui sarebbe iscritto. 
+La misurazione risulterebbe viziata dalla raccolta dati tramite streaming poiché si è a conoscenza, per ogni utente, soltanto dei gruppi di cui fa parte condizionatamente al fatto che durante il periodo di streaming egli abbia risposto ad un evento organizzato da questi gruppi, e non della totalità dei gruppi a cui sarebbe iscritto. 
 Questo particolare molto probabilmente contribuisce in maniera significativa alla determinazione di una bassa similarità tra i topic conformi ai gusti dichiarati dagli utenti e la totalità dei topic dichiarati sia dagli utenti che dai gruppi. 
 Va inoltre tenuto conto che sia gli utenti in fase di registrazione che i gruppi al momento della creazione, molto probabilmente, prestano poca attenzione alla quantità e alla sparsità dei topic inseriti nel sistema, data anche la loro elevata granulosità, condizionando così la nostra misurazione. 
 \begin{figure}
@@ -309,7 +309,7 @@ Va inoltre tenuto conto che sia gli utenti in fase di registrazione che i gruppi
 \caption{\label{jaccard_similarity} Jaccard similarity degli utenti riguardo i topic corrispondenti tra quelli dichiarati in fase di registrazione e quelli dei gruppi di cui fanno parte}
 \end{figure}
 %------------------------------------------------
-\section{Interessanti Sfide Affrontate}
+\section{Sfide affrontate}
 
 FIXME: Ricordarsi di implementare un paragrafo che espliciti le caratteristiche tecniche del nostro sistema quali fault tolerance e cose varie (tutte le caratteristiche fornite da Nifi, Kafka e Arango basically)
 
@@ -375,7 +375,7 @@ Per testare la tenuta della pipeline si è effettuata l'ingestion di tutti i cir
 }
 \section*{Ringraziamenti} % The \section*{} command stops section numbering
 
-\addcontentsline{toc}{section}{Acknowledgments} % Adds this section to the table of contents
+\addcontentsline{toc}{section}{Ringraziamenti} % Adds this section to the table of contents
 
 So long and thanks for all the fish.
 
