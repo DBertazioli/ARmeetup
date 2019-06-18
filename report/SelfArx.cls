@@ -73,7 +73,7 @@ justification=raggedright]{caption}
 % Headers
 \lhead{}%
 \chead{}%
-\rhead{\small\sffamily\bfseries\@PaperTitle\  --- \thepage/\pageref{LastPage}}
+\rhead{\footnotesize\sffamily\@PaperTitle\  --- \thepage/\pageref{LastPage}}
 % Footers
 \lfoot{}%
 \cfoot{}%
