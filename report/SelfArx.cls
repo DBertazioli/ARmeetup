@@ -90,13 +90,13 @@ justification=raggedright]{caption}
   {\color{color1}\large\sffamily\bfseries}
   {}
   {0em}
-  {\colorbox{color2!20}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\centering\arabic{section}. #1}}}
+  {\colorbox{color2!22.5}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\centering\arabic{section}. #1}}}
   []
 \titleformat{name=\section,numberless}
   {\color{color1}\large\sffamily\bfseries}
   {}
   {0em}
-  {\colorbox{color2!20}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\centering#1}}}
+  {\colorbox{color2!22.5}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\centering#1}}}
   []  
 \titleformat{\subsection}
   {\color{color1}\sffamily\bfseries}
@@ -202,7 +202,7 @@ justification=raggedright]{caption}
 \vskip18pt%
 \fcolorbox{color1}{white}{%
 \parbox{\textwidth-2\fboxsep-2\fboxrule}{\centering%
-\colorbox{color2!10}{%
+\colorbox{color2!22.5}{%
 \parbox{\textwidth-4\fboxsep-2\fboxrule}{%
 \ifx\@Keywords\@empty%
 \sffamily\textbf{\abstractname}\\\@Abstract%
