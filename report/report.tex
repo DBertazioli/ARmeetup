@@ -74,7 +74,7 @@ Explore the Meetup Social Network in ArangoDB} % Article title
 
 \Authors{Dario Bertazioli\textsuperscript{1}, Fabrizio D'Intinosante\textsuperscript{1}, Massimiliano Perletti\textsuperscript{1}*} % Authors
 \affiliation{\textsuperscript{1}\textit{Data Science, Department of Computer Science, University of Milano Bicocca, Milan, Italy}} % Author affiliation
-\affiliation{*\textbf{Corresponding author}: m.perletti@campus.unimib.it} % Corresponding author
+\affiliation{*\textbf{Corresponding author}: m.perletti2@campus.unimib.it} % Corresponding author
 
 \Keywords{AQL --- ArangoDB --- Cypher --- DataManagement --- DataVisualization --- Kafka --- Meetup --- Neo4j --- Nifi --- Python --- R --- SocialNetwork} % Keywords - if you don't want any simply remove all the text between the curly brackets
 \newcommand{\keywordname}{Keywords} % Defines the keywords heading name
@@ -122,9 +122,9 @@ Inoltre, per non restringere troppo la sfera di interessi degli utenti, l'applic
 Il focus centrale caratterizzante l'intero meccanismo dell'applicazione risulta quindi essere quello del "gruppo" visto come realtà associativa e fautore di momenti di aggregazione durante l'intero anno, molto spesso non guidati da una ristretta cerchia di organizzatori ma, al contrario, promotore di iniziative da parte dei propri membri. 
 La varietà di gruppi spazia, a seconda dei topic trattati, tra:
 \begin{enumerate}
-\item Gruppi di socializzazione, che hanno come obiettivo principale quello di svolgere attività ludiche in compagnia, molto spesso anche promotori di veri e propri eventi di incontro per single.
-\item Gruppi professionali, che si pongono l'obiettivo di mettere in contatto persone e professionisti di svariati campi attraverso workshop o presentazioni con il fine di fare crescere gli utenti dal punto di vista professionale.
-\item Gruppi creativi, ovvero gruppi di progettazione e più vocati ad hobby ed alla pratica delle più svariate arti. \\
+\item Gruppi di socializzazione, che hanno come obiettivo principale quello di svolgere attività ludiche in compagnia, molto spesso anche promotori di veri e propri eventi di incontro per single;
+\item Gruppi professionali, che si pongono l'obiettivo di mettere in contatto persone e professionisti di svariati campi attraverso workshop o presentazioni con il fine di fare crescere gli utenti dal punto di vista professionale;
+\item Gruppi creativi, ovvero gruppi di progettazione e più vocati ad hobby ed alla pratica delle più svariate arti; \\
 \end{enumerate}
 Sintetizzando, quindi, la missione di Meetup è aiutare le persone a crescere e raggiungere i loro obiettivi attraverso connessioni autentiche e reali. \\
 Ad oggi, Meetup è disponibile in 186 Paesi, e conta più di 40 milioni di membri sulla piattaforma, con più di 320 mila gruppi attivi ed una media di 12 mila eventi al giorno.
@@ -140,7 +140,7 @@ Cercando di indagare le caratteristiche di questa rete, pur tenendo in considera
 \begin{itemize}
 \item Effettuare misure quantitative semplici per verificare in quali \textbf{paesi} la piattaforma è più utilizzata ed affermata;
 \item Sfruttando le informazioni temporali, verificare quale sia il \textbf{momento migliore} della settimana e della giornata in cui organizzare un meetup per poter attrarre più persone possibili, considerando che la piattaforma è tipicamente utilizzata per incontri di carattere tecnico-professionale;
-\item Servendosi di alcune informazioni spaziali, cercare di individuare quanto ampio sia il \textbf{raggio di un evento} in termini di attrazione degli utenti (ovvero, a che misura di distanza si trovano i membri che percorrono più strada per recarsi agli eventi ai quali partecipano?);
+\item Servendosi di alcune informazioni spaziali, cercare di individuare quanto ampio sia il \textbf{raggio di un evento} in termini di attrazione degli utenti (ovvero, a che misura di distanza si trovano i membri che percorrono più strada per recarsi agli eventi ai quali partecipano);
 \item Stimare l'\textbf{efficacia del sistema di raccomandazione} della piattaforma facendo uso combinato sia delle informazioni relative ai topic caratterizzanti gli eventi, sia di quelle relative a topic verso i quali gli utenti manifestano interesse al momento dell'iscrizione alla piattaforma, avendo sempre ben presente i limiti naturali imposti dalla durata finita e relativamente breve del periodo di streaming.
 \end{itemize}
 L'obiettivo del progetto, in sintesi, è quello di identificare correlazioni o tracce significative che possano determinare delle buone regole nella creazione di eventi di notevole impatto sociale; una piccola guida "\textbf{How to}" che illustri come debba  essere organizzato un meetup di successo.
@@ -220,23 +220,23 @@ Abbiamo sfruttato questa possibilità per arricchire i dati acquisiti in streami
 In particolare, si è proceduto all'\textbf{enrichment} delle informazioni sui membri, integrando per ciascun utente:
 \begin{itemize}[noitemsep]
 \item la localizzazione spaziale, ovvero le coordinate geografiche (lat/lon) dichiarate in fase di registrazione così che il sistema di raccomandazione dell'applicazione possa suggerire gruppi su base geografica.
-\item i topic per cui l'utente ha dichiarato di avere interesse al momento dell'iscrizione alla piattaforma, anche in questo caso per un permettere il buon funzionamento del sistema di raccomandazione.
+\item i topic per cui l'utente ha dichiarato di avere interesse al momento dell'iscrizione alla piattaforma, anche in questo caso per permettere il buon funzionamento del sistema di raccomandazione.
 \end{itemize}
-L'integrazione è avvenuta tramite http(s) request (a \url{https://api.meetup.com/2/members}) via python script, chiedendo alla rest api di restituire informazioni in base all'ID dello specifico membro, iterando quindi su tutti gli utenti.
+L'integrazione è avvenuta tramite http(s) request (a \url{https://api.meetup.com/2/members}) via python script, chiedendo alla rest API di restituire informazioni in base all'ID dello specifico membro, iterando quindi su tutti gli utenti.
 Per ovviare al numero, piuttosto limitato, di richieste al minuto si è deciso di implementare un sistema a più chiavi, facendo un tuning della frequenza di richiesta in modo tale che risultasse appena al di sotto della soglia massima tollerata\footnote{Al di sopra della quale il client viene prima temporaneamente sospeso e poi bannato per ragioni di sicurezza e performance del servizio}.
 Dunque, dopo aver partizionato in modo opportuno la lista di utenti in nostro possesso, si è proceduto all'enrichment con richieste parallele. 
-Inoltre, si è preventivamente stimato il tempo totale necessario all'enrichment per tutti i (più di $800000$) membri con tre richieste parallele, controllando che fosse tollerabile.
+Inoltre, si è preventivamente stimato il tempo totale necessario all'enrichment per tutti i (più di $800k$) membri con tre richieste parallele, controllando che fosse tollerabile.
 \subsection{Nifi}% Producer and blabla
 \begin{figure}
 \includegraphics[scale=0.3]{images/nifi_workflow.png}
-\caption{\label{nifi_workflow} Il workflow Nifi}
+\caption{\footnotesize \label{nifi_workflow} Il workflow Nifi}
 \end{figure}
 Per acquisire i dati in streaming dalla piattaforma si è implementato un workflow di Nifi (vedasi \textbf{fig.~\ref{nifi_workflow}} \footnote{A clearer image:\url{https://gitlab.com/DBertazioli/armeetup/raw/master/report/images/nifi_workflow.png}}) contenente: 
 \begin{itemize} %[noitemsep]
 \item un nodo per la connessione alla \textbf{WebSocket} (\url{ws://stream.meetup.com/2/rsvps}), tramite un Client Jetty. 
 \item un nodo per il parsing iniziale;
 \item un nodo \textbf{PutFile}: si è deciso di salvare i dati acquisiti su file system per due motivi principali: innanzitutto ciò è utile per avere una copia di backup dei dati, qual ora si verificassero problemi (ad esempio, con il corretto setting di \textit{retention time} di Kafka); in secondo luogo, terminato il periodo di acquisizione, per facilitare la copia dei dati su altre virtual machines, in modo da implementare contemporaneamente la stessa pipeline su più macchine, per poter confrontare (quantitativamente, in termini, ad esempio, di quantità di dati importati, tempi di esecuzione dei vari scripts etc.) i risultati ottenuti;
-\item un nodo PublishKafka, comodo per effettuare l'ingestion dei dati in Kafka, configurandosi come un vero e proprio producer. %FIXME: forse parentesi non necessaria
+\item un nodo \textbf{PublishKafka}, comodo per effettuare l'ingestion dei dati in Kafka, configurandosi come un vero e proprio producer. %FIXME: forse parentesi non necessaria
 \end{itemize} 
 I principali vantaggi che Nifi ha fornito sono: la gestione facilitata della queue, la possibilità di parsing online dei messaggi (i.e. tramite nodo UpdateAttribute, oppure RouteOnAttribute, per eventuali workflow più articolati) e la facile interfaccia con il Kafka Producer.
 \subsection{Kafka}
@@ -247,7 +247,8 @@ Come accennato, con l'API di Kafka per Python si è potuto configurare un consum
 \begin{figure}
 \centering
 \includegraphics[scale=0.57]{graph.png}
-\caption{\label{graph_neo4j} Schema graph DB}
+\vspace*{0.01cm}
+\caption{\footnotesize \label{graph_neo4j} Schema graph DB}
 \end{figure}
 Fin dal principio viene fatta la scelta di storare i dati in un database a grafo, per via della loro struttura naturale, che ben si presta ad essere schematizzata con nodi principali, proprietà e relazioni che interconnettono tali nodi. 
 Viene quindi inizialmente effettuato l'import dei dati in Neo4j, sfruttando il linguaggio Cypher e l'ottimizzazione dell'import via csv, avendo inoltre sperimentato un approccio tramite l'API Python Py2Neo. 
@@ -261,8 +262,8 @@ Sulla base inoltre della disponibilità hardware è possibile creare più cluste
 Il database da noi creato, seguendo queste linee guida, presenta circa 1 milione e mezzo di singoli nodi e circa 28 milioni di relazioni tra questi, con un tempo di import su ArangoDB stimato in circa venti minuti.
 
 \section{Risultati}
-\paragraph{Misure quantitative semplici}:
-Con lo scopo di ispezionare alcune misure quantitative abbiamo sottoposto il DB creato ad alcune query per estrarre informazioni quali:
+\paragraph{Misure quantitative semplici:}
+con lo scopo di ispezionare alcune misure quantitative abbiamo sottoposto il DB creato ad alcune query per estrarre informazioni quali:
 \begin{itemize}[noitemsep]
 \item Quantità di eventi per Paese;
 \item Quantità di gruppi per Paese;
@@ -277,10 +278,11 @@ In merito invece ai trend topic, per i gruppi i più quotati sembrerebbero quell
 \begin{figure}
 \centering
 \includegraphics[width = 9.2 cm, height = 5 cm]{rose_plot_quantitative.jpeg}
-\caption{\label{rose_plot} Rose plot dei dieci paesi principali per numero di gruppi ed eventi (USA non considerati per evitare problemi di scala)}
+\vspace*{0.01cm}
+\caption{\footnotesize \label{rose_plot}Rose plot dei dieci paesi principali per numero di gruppi ed eventi (USA non considerati per evitare problemi di scala)}
 \end{figure}
-\paragraph{Utilizzo delle informazioni temporali}:
-Attingendo alle informazioni temporali degli eventi, presenti nei messaggi, ed applicando un'opportuna manipolazione per convertire l'originale formato timestamp in un formato umanamente più leggibile, si è stati in grado di rispondere alla seconda domanda di ricerca. 
+\paragraph{Utilizzo delle informazioni temporali:}
+attingendo alle informazioni temporali degli eventi, presenti nei messaggi, ed applicando un'opportuna manipolazione per convertire l'originale formato timestamp in un formato umanamente più leggibile, si è stati in grado di rispondere alla seconda domanda di ricerca. 
 Dopo aver infatti adattato i metadati temporali alle time zone così da avere una panoramica coerente sugli eventi Meetup tenutisi nel mondo, indipendentemente dal fuso orario, si è provveduto a realizzare una tabella di Pivot, tenente conto della numerosità di partecipanti agli eventi discriminati per giorno della settimana e per fascia oraria della giornata. 
 Una volta realizzata la tabella è stato quindi possibile procedere alla costruzione della \textit{heatmap} in \textbf{fig.~\ref{plot_heatmap}} 
 per rappresentare al meglio queste informazioni. 
@@ -289,16 +291,16 @@ Ciò si conforma bene all'intuizione che la maggior parte dell'utenza di Meetup 
 \begin{figure}
 \centering
 \includegraphics[width = 9.2 cm, height = 5 cm]{heatmap_with_barplot_v3.jpg}
-\caption{\label{plot_heatmap} Heatmap distribuzione temporale degli eventi}
+\vspace*{0.01cm}
+\caption{\footnotesize \label{plot_heatmap} Heatmap distribuzione temporale degli eventi}
 \end{figure}
-\paragraph{Utilizzo delle informazioni spaziali}:
-Per esplorare a fondo le informazioni a disposizione, si sono sfruttati i metadati spaziali presenti nei messaggi per realizzare una visualizzazione interattiva in formato di mappa esplorabile, focalizzata sull'Europa. 
+\paragraph{Utilizzo delle informazioni spaziali:}
+per esplorare a fondo le informazioni a disposizione, si sono sfruttati i metadati spaziali presenti nei messaggi per realizzare una visualizzazione interattiva in formato di mappa esplorabile, focalizzata sull'Europa. 
 Con questa mappa l'utente può potenzialmente esplorare l'offerta di eventi su base spaziale e visualizzarli localizzati nel luogo in cui sono stati organizzati e, cliccandoci sopra, può acquisire informazioni quali le caratteristiche dell'evento, come il nome dell'evento, il nome del luogo in cui è stato organizzato, l'orario, le keywords relative all'argomento trattato nell'evento e altro ancora. 
 La mappa è stata costruita stratificando più layer, in modo da permettere all'utilizzatore di filtrare a priori ciò che potrà visualizzare, attraverso l'utilizzo di widget. 
 Questi filtri permettono di focalizzare la visualizzazione su un certo Paese europeo, oppure di filtrare gli eventi sulla base dei topic trattati dagli stessi. 
 Per limiti computazionali, inoltre, è stata effettuata una selezione a priori degli eventi, per cui sulla mappa saranno visibili solamente gli eventi che hanno raggiunto il più alto numero di adesioni, ma la struttura così come realizzata e in presenza di mezzi idonei potrebbe facilmente permettere di visualizzare la totalità degli eventi presenti a livello europeo o mondiale.
-\paragraph{Valutazione efficacia sistema di raccomandazione}:
-Con lo scopo di valutare il sistema di raccomandazione della piattaforma e sfruttando le informazioni a disposizione si è calcolata la Jaccard similarity per ogni utente, prendendo in considerazione i topic comuni tra quelli dichiarati dall'utente in fase di registrazione ed i topic dei gruppi di cui l'utente fa parte, come si vede in \textbf{fig.~\ref{jaccard_similarity}}. 
+\paragraph{Valutazione efficacia sistema di raccomandazione:} $~~~$ con lo scopo di valutare il sistema di raccomandazione della piattaforma e sfruttando le informazioni a disposizione si è calcolata la Jaccard similarity per ogni utente, prendendo in considerazione i topic comuni tra quelli dichiarati dall'utente in fase di registrazione ed i topic dei gruppi di cui l'utente fa parte, come si vede in \textbf{fig.~\ref{jaccard_similarity}}. 
 Questa misurazione ci ha permesso di giungere ad una certa constatazione riguardo la modalità di acquisizione dei dati. 
 La misurazione risulterebbe viziata dalla raccolta dati tramite streaming poiché si è a conoscenza, per ogni utente, soltanto dei gruppi di cui fa parte condizionatamente al fatto che durante il periodo di streaming egli abbia risposto ad un evento organizzato da questi gruppi, e non della totalità dei gruppi a cui sarebbe iscritto. 
 Questo particolare molto probabilmente contribuisce in maniera significativa alla determinazione di una bassa similarità tra i topic conformi ai gusti dichiarati dagli utenti e la totalità dei topic dichiarati sia dagli utenti che dai gruppi. 
@@ -306,20 +308,21 @@ Va inoltre tenuto conto che sia gli utenti in fase di registrazione che i gruppi
 \begin{figure}
 \centering
 \includegraphics[width = 8.7 cm, height = 5 cm]{jaccard_similarity.jpeg}
-\caption{\label{jaccard_similarity} Jaccard similarity degli utenti riguardo i topic corrispondenti tra quelli dichiarati in fase di registrazione e quelli dei gruppi di cui fanno parte}
+\vspace*{0.01cm}
+\caption{\footnotesize \label{jaccard_similarity} Jaccard similarity degli utenti riguardo i topic corrispondenti tra quelli dichiarati in fase di registrazione e quelli dei gruppi di cui fanno parte}
 \end{figure}
 %------------------------------------------------
 \section{Sfide affrontate}
 
-FIXME: Ricordarsi di implementare un paragrafo che espliciti le caratteristiche tecniche del nostro sistema quali fault tolerance e cose varie (tutte le caratteristiche fornite da Nifi, Kafka e Arango basically)
+%FIXME: Ricordarsi di implementare un paragrafo che espliciti le caratteristiche tecniche del nostro sistema quali fault tolerance e cose varie (tutte le caratteristiche fornite da Nifi, Kafka e Arango basically)
 
 {\small
 Durante la realizzazione del progetto si sono dovute affrontare diverse problematiche legate ai più svariati ambiti, da quello della scalabilità in import dei dati a quello della velocità di processing, fino all'implementazione di una vera e propria costruzione continua del database con processo live streaming.
-\paragraph{Symbolic Links}: Avendo effettuato lo streaming utilizzando una sola Virtual Machine (VM), per poter trasferire i dati anche sulle altre macchine si è provveduto a creare parallelamente all'ingestion diretta in Kafka anche un backup direttamente nella macchina. 
+\paragraph{Symbolic Links:} avendo effettuato lo streaming utilizzando una sola Virtual Machine (VM), per poter trasferire i dati anche sulle altre macchine si è provveduto a creare parallelamente all'ingestion diretta in Kafka anche un backup direttamente nella macchina. 
 Ciò ha permesso di trasferire direttamente questo backup dalla macchina principale alle altre. 
 Successivamente nelle nuove VM si rendeva quindi necessario implementare un ingestion dalla VM a Kafka per mezzo di un workflow Nifi, così da emulare la stessa procedura dello streaming. 
 Per ovviare poi ad un bug/limite dei nodi \textit{getFile/FetchFile} di Nifi, che si verifica nel tentativo di eseguire un ingestion di elevata quantità di file in una sola volta, è stata escogitata una soluzione creando dei link simbolici, dividendo la creazione in sottocartelle, facendo così leggere al nodo \textit{GetFile} questi link e impostando il nodo in modo che venisse eliminato il link dopo la singola lettura/ingestion. Ciò ha permesso di conservare i dati originali ed impedire che i nodi di import li eliminassero, facendo risparmiare tempo per quanto riguarda la creazione dei database di backup sulle diverse VM.
-\paragraph{Ottimizzazione tempi di estrazione dei messaggi}:  \\ Con il fine di estrarre le singole entità presenti nei messaggi, che per la natura dello streaming risultavano ripetersi più volte a seconda delle interazioni degli utenti con il servizio, si è tentato inizialmente un approccio mediante liste su python. 
+\paragraph{Ottimizzazione tempi di estrazione dei messaggi:}  $~~$ con il fine di estrarre le singole entità presenti nei messaggi, che per la natura dello streaming risultavano ripetersi più volte a seconda delle interazioni degli utenti con il servizio, si è tentato inizialmente un approccio mediante liste su python. 
 Sinteticamente, questo approccio consisteva nel creare un Kafka consumer tramite l'API kafka per python e, ciclando, produrre tutti i messaggi in nostro possesso estraendo le singole entità, come utenti, gruppi e altro, utilizzando due liste di cui una contenitore per le singole entità ed una come "black list" per tenere traccia delle entità già inserite e quindi da non riprocessare. 
 Questo approccio si è però dimostrato limitato in termini di perfomance nel processare grandi volumi di dati ed ha portato ad optare per una soluzione alternativa: utilizzando dei dizionari, e sfruttando gli ID presenti per ogni entità contenuta nei messaggi, si sono utilizzati questi ID come chiavi dei dizionari assegnandogli come valore tutte le proprietà associate a quell'entità. 
 La differenza in termini di prestazioni si è dimostrata estremamente netta. 
@@ -327,34 +330,36 @@ Come si vede in \textbf{fig.~\ref{plot_lists_dicts}} la differenza è estremamen
 \begin{figure}
 \centering
 \includegraphics[scale=0.54]{viz_benchmark_lists_dicts.jpeg}
-\caption{\label{plot_lists_dicts} Differenza di prestazioni fra liste e dizionari}
+\caption{\footnotesize \label{plot_lists_dicts} Differenza di prestazioni fra liste e dizionari}
 \end{figure}
-\paragraph{Import Cypher vs Py2Neo}: Una volta ottenuti i CSV necessari all'import dei nodi e delle relazioni si è innanzitutto tentato un approccio con l'API Py2Neo per python. 
+\paragraph{Import Cypher vs Py2Neo:} una volta ottenuti i CSV necessari all'import dei nodi e delle relazioni si è innanzitutto tentato un approccio con l'API Py2Neo per python. 
 Come per le liste in precedenza, l'API si è comportata bene sulle ridotte dimensioni, mentre al crescere del volume dei dati da importare si è resa inutilizzabile per gli elevati tempi d'attesa. 
 Come si vede in \textbf{fig.~\ref{plot_cypher_py2neo}} l'import tramite cypher shell, meccanismo nativo di import per Neo4j, si dimostra fin dalle piccole dimensionalità molto più efficiente di Py2Neo mantenendo praticamente costante il tempo di import, con prestazioni che toccano circa i 12 secondi per importare 500 mila nodi distinti, contro i circa 80 minuti richiesti da Py2Neo.
 \begin{figure}
 \centering
 \includegraphics[scale=0.54]{viz_benchmark_cypher_py2neo.jpeg}
-\caption{\label{plot_cypher_py2neo} Differenza di prestazioni fra Cypher e Py2Neo API}
+\vspace*{0.01cm}
+\caption{\footnotesize \label{plot_cypher_py2neo} Differenza di prestazioni fra Cypher e Py2Neo API}
 \end{figure}
-\paragraph{Import Cypher vs Arangoimp}
+\paragraph{Import Cypher vs Arangoimp:}
 \begin{figure}
 \centering
 \includegraphics[scale=0.54]{viz_benchmark_cypher_arangoimp.jpeg}
-\caption{\label{plot_cypher_arangoimp} Differenza di prestazioni fra Cypher e Arangoimp}
+\vspace*{0.01cm}
+\caption{\footnotesize \label{plot_cypher_arangoimp} Differenza di prestazioni fra Cypher e Arangoimp}
 \end{figure}
-Come si può vedere in \textbf{fig.~\ref{plot_cypher_arangoimp}} il confronto tra Cypher e Arangoimp nell'import dati si gioca sull'ordine dei millisecondi per piccole importazioni mentre di pochi secondi per grandi moli di dati. 
+come si può vedere in \textbf{fig.~\ref{plot_cypher_arangoimp}} il confronto tra Cypher e Arangoimp nell'import dati si gioca sull'ordine dei millisecondi per piccole importazioni mentre di pochi secondi per grandi moli di dati. 
 Arangoimp si dimostra sostanzialmente costante per i volumi testati, mentre l'import tramite Cypher comincia a crescere in termini di tempo richiesto partendo da volumi superiori a 100mila istanze. 
 Anche per quanto riguarda l'import delle relazioni tra i nodi Arangoimp si è dimostrato molto più rapido. 
 Questo probabilmente è ascrivibile al fatto che Neo4j sfrutta un meccanismo chiamato Index free adjacency che permette di incrementare le prestazioni a livello di query a discapito di una maggiore lentezza in fase di import. 
-\paragraph{Scalability}: In prima istanza, dopo un primo streaming effettuato alla fine di dicembre 2018, si sono sfruttati questi dati per calibrare le scelte in fatto di gestione della dimensionalità. 
+\paragraph{Scalability:} in prima istanza, dopo un primo streaming effettuato alla fine di dicembre 2018, si sono sfruttati questi dati per calibrare le scelte in fatto di gestione della dimensionalità. 
 Questo primo streaming contava circa 1 milione di messaggi provenienti dall'API Meetup. 
 Proprio grazie a questo quantitativo iniziale si sono potute tarare le nostre decisioni su una dimensionalità realistica e già piuttosto complessa. 
 Per questa ragione si è deciso di sfruttare in prima istanza Kafka, che ha permesso di effettuare il primo storage senza essere condizionato in fase di consuming dalla dimensionalità dello storage stesso. 
 Anche la scelta di un database a grafo, e nello specifico di Neo4j in principio, è stata presa con l'intento di ottenere il massimo delle prestazioni possibili in fatto di velocità di risposta alle query, anche se poi sostituito successivamente dall'adozione di ArangoDB, ancora più performante in fase di import, e con la possibilità di essere distribuito orizzontalmente. 
 Infine le scelte operate in fatto di processing dei dati con i dizionari per l'estrazione delle singole entità prima, e con l'applicativo Arangoimp per l'import su ArangoDB dopo, si sono dimostrate essere vincenti per quello che è stato il vero e proprio streaming effettuato a febbraio 2019.
 Quest'ultimo infatti contava più di 2 milioni e mezzo di messaggi, con una dimensionalità finale del database di 1 milione e mezzo di singoli nodi e circa 28 milioni di relazioni tra questi.
-\paragraph{Conversione dei metadati temporali}: Durante la fase di analisi dei dati con l'obiettivo di realizzare statistiche e visualizzazioni, ci si è imbattuti nel problema della formattazione dei metadati temporali. 
+\paragraph{Conversione dei metadati temporali:} durante la fase di analisi dei dati con l'obiettivo di realizzare statistiche e visualizzazioni, ci si è imbattuti nel problema della formattazione dei metadati temporali. 
 Nello specifico tutti i metadati temporali provenienti dall'API di Meetup si presentano in formato timestamp in millisecondi con fuso orario UTC; questo rappresentava un problema nella rappresentazione temporale degli eventi ad esempio, oppure per quella della sottoscrizione agli eventi da parte degli utenti. 
 Per ovviare a questo inconveniente, e formattare questi metadati in formato date-time condizionati alle rispettive time-zone locali si sono sfruttati i metadati riguardanti la localizzazione degli utenti al momento della sottoscrizione agli eventi e, quindi, alla generazione del messaggio RSVP. 
 Partendo quindi da queste informazioni in formato latitudine/longitudine si sono innanzitutto localizzate le corrispondenti time-zone attraverso la libreria \textit{timezonefinder} per python e, successivamente, attraverso la libreria \textit{pytz} si sono potuti convertire i timestamp in date-time condizionatamente alla time-zone prima definita. 
@@ -362,10 +367,11 @@ Lo sviluppo dei dati è visibile in \textbf{fig.~\ref{datetime_timezoned}}, dove
 \begin{figure}
 \centering
 \includegraphics[width = 9 cm, height = 3.5 cm]{datetime_timezoned.PNG}
-\caption{\label{datetime_timezoned} Passaggi conversione timestamp into datetime timezoned}
+\vspace*{0.01cm}
+\caption{\footnotesize \label{datetime_timezoned} Passaggi conversione timestamp into datetime timezoned}
 \end{figure}
-\paragraph{Implementazione ingestion database in live streaming}
-Con l'obiettivo di implementare il meccanismo di ingestion continuo nel DB, sulla base di uno streaming no-stop, si è implementata una pipeline che, a partire dal consumer Kafka, acquisisce i messaggi, li elabora con lo stesso meccanismo utilizzato per creare i csv e, sfruttando \textit{python-arango}, un API di interfaccia tra python e ArangoDB, effettua l'ingestion nel database, preservandone la consistenza effettuando un check per evitare di inserire duplicati. 
+\paragraph{Implementazione ingestion database in live streaming:}
+con l'obiettivo di implementare il meccanismo di ingestion continuo nel DB, sulla base di uno streaming no-stop, si è implementata una pipeline che, a partire dal consumer Kafka, acquisisce i messaggi, li elabora con lo stesso meccanismo utilizzato per creare i csv e, sfruttando \textit{python-arango}, un API di interfaccia tra python e ArangoDB, effettua l'ingestion nel database, preservandone la consistenza effettuando un check per evitare di inserire duplicati. 
 Per questa fase di ingestion sono previste due possibili strategie:
 \begin{itemize}[noitemsep]
 \item Un ingestion continua, per cui ogni messaggio viene inserito nel DB in seguito al check della consistenza;
