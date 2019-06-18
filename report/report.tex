@@ -263,7 +263,8 @@ Il database da noi creato, seguendo queste linee guida, presenta circa 1 milione
 
 \section{Risultati}
 \paragraph{Misure quantitative semplici:}
-con lo scopo di ispezionare alcune misure quantitative abbiamo sottoposto il DB creato ad alcune query per estrarre informazioni quali:
+con lo scopo di ispezionare attraverso alcune misure quantitative i dati in nostro
+possesso, abbiamo interrogato il DB creato con alcune query per estrarre informazioni quali:
 \begin{itemize}[noitemsep]
 \item Quantità di eventi per Paese;
 \item Quantità di gruppi per Paese;
@@ -279,10 +280,13 @@ In merito invece ai trend topic, per i gruppi i più quotati sembrerebbero quell
 \centering
 \includegraphics[width = 9.2 cm, height = 5 cm]{rose_plot_quantitative.jpeg}
 \vspace*{0.01cm}
-\caption{\footnotesize \label{rose_plot}Rose plot dei dieci paesi principali per numero di gruppi ed eventi (USA non considerati per evitare problemi di scala)}
+\caption{\footnotesize \label{rose_plot}Rose plot dei dieci paesi principali per
+numero di gruppi ed eventi (gli USA, che sarebbero
+di gran lunga i più rappresentati in tale plot, non
+vengono inclusi perchè aventi numeri fuori scala)}
 \end{figure}
 \paragraph{Utilizzo delle informazioni temporali:}
-attingendo alle informazioni temporali degli eventi, presenti nei messaggi, ed applicando un'opportuna manipolazione per convertire l'originale formato timestamp in un formato umanamente più leggibile, si è stati in grado di rispondere alla seconda domanda di ricerca. 
+attingendo alle informazioni temporali degli eventi, presenti nei messaggi, ed applicando un'opportuna manipolazione per convertire l'originale formato timestamp (time-from-epoch) in un formato umanamente più leggibile, si è stati in grado di rispondere alla seconda domanda di ricerca. 
 Dopo aver infatti adattato i metadati temporali alle time zone così da avere una panoramica coerente sugli eventi Meetup tenutisi nel mondo, indipendentemente dal fuso orario, si è provveduto a realizzare una tabella di Pivot, tenente conto della numerosità di partecipanti agli eventi discriminati per giorno della settimana e per fascia oraria della giornata. 
 Una volta realizzata la tabella è stato quindi possibile procedere alla costruzione della \textit{heatmap} in \textbf{fig.~\ref{plot_heatmap}} 
 per rappresentare al meglio queste informazioni. 
@@ -295,7 +299,8 @@ Ciò si conforma bene all'intuizione che la maggior parte dell'utenza di Meetup 
 \caption{\footnotesize \label{plot_heatmap} Heatmap distribuzione temporale degli eventi}
 \end{figure}
 \paragraph{Utilizzo delle informazioni spaziali:}
-per esplorare a fondo le informazioni a disposizione, si sono sfruttati i metadati spaziali presenti nei messaggi per realizzare una visualizzazione interattiva in formato di mappa esplorabile, focalizzata sull'Europa. 
+per esplorare a fondo le informazioni a disposizione, si sono sfruttati i metadati spaziali presenti nei messaggi per realizzare una visualizzazione interattiva in formato di mappa esplorabile, focalizzata sull'Europa (principalmente per questioni di
+potenza computazionale disponibile). 
 Con questa mappa l'utente può potenzialmente esplorare l'offerta di eventi su base spaziale e visualizzarli localizzati nel luogo in cui sono stati organizzati e, cliccandoci sopra, può acquisire informazioni quali le caratteristiche dell'evento, come il nome dell'evento, il nome del luogo in cui è stato organizzato, l'orario, le keywords relative all'argomento trattato nell'evento e altro ancora. 
 La mappa è stata costruita stratificando più layer, in modo da permettere all'utilizzatore di filtrare a priori ciò che potrà visualizzare, attraverso l'utilizzo di widget. 
 Questi filtri permettono di focalizzare la visualizzazione su un certo Paese europeo, oppure di filtrare gli eventi sulla base dei topic trattati dagli stessi. 
@@ -375,10 +380,22 @@ con l'obiettivo di implementare il meccanismo di ingestion continuo nel DB, sull
 Per questa fase di ingestion sono previste due possibili strategie:
 \begin{itemize}[noitemsep]
 \item Un ingestion continua, per cui ogni messaggio viene inserito nel DB in seguito al check della consistenza;
-\item Un ingestion per fasi, la quale consiste nel creare dei batch db tramite l'API, per cui si raccolgono un determinato numero di messaggi e si effettua un caricamento più consistente.
+\item Una ingestion "a blocchi" di dimensione variabile a piacere, la quale consiste nel creare dei batch db tramite l’API, per cui si raccolgono un determinato
+numero di messaggi e si effettua un caricamento più consistente\footnote{Ad esempio, c’è la possibilità di effettuare una ingestion al giorno, programmando nella Crontab unix l’esecuzione di un determinato script di import} .
 \end{itemize}
 Per testare la tenuta della pipeline si è effettuata l'ingestion di tutti i circa 2 milioni di messaggi precedentemente archiviati in Kafka, verificando quindi la resistenza ad un grande carico: tipicamente infatti la frequenza dei messaggi oscilla tra i 100 ed i 300 messaggi al secondo, ben al di sotto delle frequenze testate, ovvero tra 1000 e 10 mila messaggi al secondo.
 }
+\section{Conclusioni}
+Grazie alla pipeline di acquisizione, trattamento, enrichment parziale e storage dei dati RSVP esposti da Meetup siamo stati in grado di rispondere alle domande di ricerca poste all'inizio di questo lavoro, definendo un quadro piuttosto generale che descrive le caratteristiche salienti (la struttura di meetup), i punti di forza (l'aggregazione e la partecipazione attiva degli utenti) e le statistiche in termini di diffusione, utilizzo e ricchezza della proposta di contenuti sulla piattaforma di tale organizzazione. 
+
+Vale la pena di sottolineare che la struttura software da noi creata beneficia delle seguenti principali caratteristiche:
+\begin{itemize}
+\item FIXME: aggiungi caratteristiche pls
+\end{itemize}
+
+Il compimento di questo progetto ci è stato particolarmente utile perchè ci ha permesso di fare pratica con una serie di software ampiamente diffusi in ambito di data management (Nifi, Kafka, Neo4j, ArangoDB e le varie API connesse). 
+
+Inoltre, ci siamo dovuti scontrare con una serie di sfide e necessità pratiche che ci hanno fatto comprendere alcune delle principali difficoltà (come ad esempio il tuning della pipeline per avere performance accettabili, oppure le difficoltà con il (pre)processing dei dati grezzi e il loro parziale arricchimento) che tipicamente si incontrano qualora si voglia strutturare un progetto (anche, a maggior ragione, non di tipo "didattico") come quello in oggetto.
 \section*{Ringraziamenti} % The \section*{} command stops section numbering
 
 \addcontentsline{toc}{section}{Ringraziamenti} % Adds this section to the table of contents
