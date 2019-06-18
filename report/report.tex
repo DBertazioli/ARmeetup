@@ -390,17 +390,26 @@ Grazie alla pipeline di acquisizione, trattamento, enrichment parziale e storage
 
 Vale la pena di sottolineare che la struttura software da noi creata beneficia delle seguenti principali caratteristiche:
 \begin{itemize}
-\item FIXME: aggiungi caratteristiche pls
+\item Scalability: la scalabilità del DB è garantita dal DBMS scelto, siccome ArangoDB permette di scalare orizzontalmente in modo praticamente illimitato.
+\item Fault tolerance: con la dovuta distribuzione e replicazione della pipeline su diverse macchine, sarebbe potenzialmente garantita la tolleranza all'interruzione di un qualsiasi elemento all'interno della pipeline stessa. Ciò sarebbe permesso in particolare da Nifi e Kafka che garantiscono la possibilità di gestire la queue.
+\item Consistency: la consistenza è garantita dalla pipeline di preprocessing elaborata, in grado di garantire l'univocità delle istanze. Con un ulteriore raffinamento di quest'ultima sarebbe possibile inoltre correggere anche le piccole imperfezioni rimaste, come la riconversione di alcuni caratteri speciali nei testi.
 \end{itemize}
 
 Il compimento di questo progetto ci è stato particolarmente utile perchè ci ha permesso di fare pratica con una serie di software ampiamente diffusi in ambito di data management (Nifi, Kafka, Neo4j, ArangoDB e le varie API connesse). 
 
 Inoltre, ci siamo dovuti scontrare con una serie di sfide e necessità pratiche che ci hanno fatto comprendere alcune delle principali difficoltà (come ad esempio il tuning della pipeline per avere performance accettabili, oppure le difficoltà con il (pre)processing dei dati grezzi e il loro parziale arricchimento) che tipicamente si incontrano qualora si voglia strutturare un progetto (anche, a maggior ragione, non di tipo "didattico") come quello in oggetto.
 \section*{Ringraziamenti} % The \section*{} command stops section numbering
-
+Per questo lavoro si ringraziano
+\begin{itemize}
+\item Il prof. Andrea Maurino per gli opportuni indirizi ed i consigli, oltre che per l'opportunità di cimentarci con un problema che ci ha fatto crescere professionalmente;
+\item Il prof. Vincenzo Cutrona per la costante presenza e pazienza nei momenti di bisogno;
+\item Il prof. Antonio Cabitza per tutti i consigli datici per rappresentare al meglio i risultati del nostro lavoro, in modo da valorizzarlo ancora di più;
+\item Il nostro compagno, e amico, Alessandro Borroni, per aver realizzato per noi il logo del progetto;
+\item L'Università degli Studi di Milano-Bicocca per averci fornito l'accesso alla macchine virtuali su Microsoft Azure, così da permetterci di lavorare all'interezza del nostro progetto.
+\end{itemize}
 \addcontentsline{toc}{section}{Ringraziamenti} % Adds this section to the table of contents
 
-So long and thanks for all the fish.
+%So long and thanks for all the fish.
 
 %----------------------------------------------------------------------------------------
 %	REFERENCE LIST
