@@ -1,64 +1,15 @@
--slide 1: logo bicocca somewhere
-
--slide 2: sposta un pelo dati numerici e fix colore lable archi
-
--slide 3: fix Inglish:
-                "temporal distribution of the events"
-                "event area of influence"
-                
--Slide 4:   leva schema
-            fix covered points che è un poco brutto
-            ---
-            aggiungi stacco architecture
-            ---
+﻿- slide 5:  
             
-- slide 5:  fix azure con hard disk
-            collega py con arango label "online ingestion"
-            rigira la freccia di aql query
-            un paio di spazi più in alto tutto
+            
+           
             aggiungere animazione con :
                 -nifi: template
                 -py: esempi di py script (oppure screen repo)
                 - query (screen)
                 
--slide 6:   ---
-            aggiungi stacco result
-            ---
-            metti mezza colonna nero (come decision models)
-            
-            -average numb of guest for each partecipant
-            
-            - trend topic among users
-            
--slide 7:   style reset
-             
-            -best moment for a meetup
-                - in a day
-                - during the week
-                
-            - wordlwide vs locally    
-            
--slide 8:   title: Area of Influence (event)
-            an interactive map that displays useful informations about events, 
-            i.e. a measure of the area of influence radius for each event.
-            
--slide 9:   stylish 
-            
 
-            "evaluate the recommender system efficiency investigating similarity between 
-             the group topics and those topics the user is interested in"
-             
-             "it is more like an idea!"
-             
-             
--slide 10:
-            hexagonal structure
-            2: optimization in message extraction
-            remove or fix numbars
             
--slide 11:
-            personalmente leverei improvement blablabla ma parliamone
-            
-            mettere v-tick al posto di punto escalamativo nell'icon
-            alzare il testo "software structure benefits blabla" sopra immagine
+  
+           
+ 
             
