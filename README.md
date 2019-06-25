@@ -41,7 +41,7 @@ Come conclusione del nostro progetto e della nostra esplorazione abbiamo redatto
 &#8860; &nbsp; **Dario Bertazioli**
 
 - *Cosa studio*: Studente Magistrale di Data Science presso l'Università degli Studi di Milano-Bicocca;
-- *Traguardi precedenti*: Laurea triennale in Fisica presso l'Università degli Studi di Milano.
+- *Studi precedenti*: Laurea triennale in Fisica presso l'Università degli Studi di Milano.
 <br>
 
 <p align = "center">
@@ -51,7 +51,7 @@ Come conclusione del nostro progetto e della nostra esplorazione abbiamo redatto
 &#8860; &nbsp; **Fabrizio D'Intinosante**
 
 - *Cosa studio*: Studente Magistrale di Data Science presso l'Università degli Studi di Milano-Bicocca;
-- *Traguardi precedenti*: Laurea triennale in Economia e Statistica per le organizzazioni presso l'Università degli Studi di Torino.
+- *Studi precedenti*: Laurea triennale in Economia e Statistica per le organizzazioni presso l'Università degli Studi di Torino.
 <br>
 
 <p align = "center">
@@ -61,7 +61,7 @@ Come conclusione del nostro progetto e della nostra esplorazione abbiamo redatto
 &#8860; &nbsp; **Massimiliano Perletti**
 
 - *Cosa studio*: Studente Magistrale di Data Science presso l'Università degli Studi di Milano-Bicocca;
-- *Traguardi precedenti*: Laurea triennale in Ingegneria dei materiali e delle nano-tecnologie presso il Politecnico di Milano.
+- *Studi precedenti*: Laurea triennale in Ingegneria dei materiali e delle nano-tecnologie presso il Politecnico di Milano.
 <br>
 
 <p align = "center">
