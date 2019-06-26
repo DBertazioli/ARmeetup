@@ -98,7 +98,11 @@ match (m)-[r:DECLARED_INTEREST_IN]->(t:Topic)
 with count(r) as dichiarati, corrispondenze, m
 match (m)-[r1:IS_INTERESTED_IN]-(t:Topic)
 with m, corrispondenze, dichiarati, count(r1) as interessato
-return m.id as ID, corrispondenze, dichiarati, interessato, (toFloat(corrispondenze))/((toFloat(dichiarati)+toFloat(interessato))-toFloat(corrispondenze)) as jac_similarity
+return m.id as ID, 
+corrispondenze, 
+dichiarati, 
+interessato, 
+(toFloat(corrispondenze))/((toFloat(dichiarati)+toFloat(interessato))-toFloat(corrispondenze)) as jac_similarity
 order by jac_similarity desc
 ----
 
