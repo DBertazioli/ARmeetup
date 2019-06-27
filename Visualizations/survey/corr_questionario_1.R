@@ -21,7 +21,7 @@ df_corr2 <- df2[,c(-1,-8)]
 # mcor <- cor(df_corr, method = 'pearson')
 # mcor <- rcorr(as.matrix(df_corr), type = 'pearson')
 
-mcor <- corr.test(df_corr, method = 'spearman', adjust = 'none')
+mcor <- corr.test(df_corr, method = 'pearson', adjust = 'none')
 mcor2 <- corr.test(df_corr2, method = 'pearson', adjust = 'none')
 
 # viz 1 -------------------------------------------------------------------
